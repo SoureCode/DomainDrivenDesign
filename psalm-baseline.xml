@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
+  <file src="src/Area/AbstractSubAreaFiles.php">
+    <MixedInferredReturnType occurrences="1">
+      <code>self</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1"/>
+    <UndefinedMethod occurrences="1">
+      <code>writeFiles</code>
+    </UndefinedMethod>
+  </file>
+  <file src="src/Area/AreaFilesTrait.php">
+    <InvalidReturnType occurrences="3">
+      <code>T</code>
+      <code>T</code>
+      <code>T[]</code>
+    </InvalidReturnType>
+  </file>
+  <file src="src/Area/SubAreaTrait.php">
+    <InvalidReturnType occurrences="3">
+      <code>T</code>
+      <code>T</code>
+      <code>T[]</code>
+    </InvalidReturnType>
+  </file>
+  <file src="src/Doctrine/DoctrineHelper.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>strtolower($className)</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedConstant occurrences="2">
+      <code>Types::ARRAY</code>
+      <code>Types::OBJECT</code>
+    </DeprecatedConstant>
+  </file>
+  <file src="src/Files/Model.php">
+    <InvalidArgument occurrences="2">
+      <code>new BooleanValue(false)</code>
+      <code>new StringValue('"' . $tableName . '"')</code>
+    </InvalidArgument>
+  </file>
+  <file src="src/Files/ValueObject.php">
+    <InvalidArgument occurrences="2">
+      <code>new ClassConstValue(Types::class, $constName)</code>
+    </InvalidArgument>
+  </file>
+</files>
