@@ -12,7 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     #[ORM\Embedded(columnPrefix: false)]
-    public readonly UserId $id;
+    public UserId $id;
     #[ORM\Embedded(columnPrefix: false)]
     public Email $email;
+
+    public function __construct(Email $email)
+    {
+        $this->id = new UserId();
+        $this->email = $email;
+    }
 }

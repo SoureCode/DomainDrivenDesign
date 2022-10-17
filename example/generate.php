@@ -90,11 +90,13 @@ $domain = $userBoundingContext->domain();
 
 $userModel = $domain->createModel('User');
 $userIdValueObject = $domain->createValueObject('UserId');
-$userIdValueObject->setType(new ClassType(Ulid::class));
+$userIdValueObject
+    ->setType(new ClassType(Ulid::class), false)
+    ->setColumnName('id');
 
 $emailValueObject = $domain->createValueObject('Email');
-$userModel->addProperty('id', $userIdValueObject);
-$userModel->addProperty('email', $emailValueObject);
+$userModel->addProperty($userIdValueObject, 'id', false);
+$userModel->addProperty($emailValueObject);
 
 $writer = new FilesystemWriter($filesystem);
 

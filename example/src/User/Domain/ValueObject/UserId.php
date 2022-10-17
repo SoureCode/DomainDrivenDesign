@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace App\User\Domain\ValueObject;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Embeddable]
 final class UserId
 {
-    #[ORM\Column(name: 'userid', type: Types::ulid)]
+    #[ORM\Column(name: 'id', type: 'ulid')]
     public readonly Ulid $value;
 
-    public function __construct(Ulid $value)
+    public function __construct()
     {
-        $this->value = $value;
+        $this->value = new Ulid();
     }
 }

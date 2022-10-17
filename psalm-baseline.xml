@@ -39,8 +39,21 @@
     </InvalidArgument>
   </file>
   <file src="src/Files/ValueObject.php">
-    <InvalidArgument occurrences="2">
-      <code>new ClassConstValue(Types::class, $constName)</code>
+    <InvalidArgument occurrences="3">
+      <code>$value</code>
+      <code>new StringValue($columnName)</code>
     </InvalidArgument>
+    <MixedArgument occurrences="1">
+      <code>$type-&gt;getClassName()-&gt;getShortName()</code>
+    </MixedArgument>
+    <MixedMethodCall occurrences="1">
+      <code>getShortName</code>
+    </MixedMethodCall>
+    <TypeDoesNotContainType occurrences="1">
+      <code>$value instanceof StringValue</code>
+    </TypeDoesNotContainType>
+    <UndefinedMethod occurrences="1">
+      <code>getClassName</code>
+    </UndefinedMethod>
   </file>
 </files>
