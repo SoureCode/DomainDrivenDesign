@@ -28,30 +28,35 @@ class ValueObjectFactory implements ValueObjectFactoryInterface
 
     public function create(AreaInterface $area, string $name): ValueObject
     {
+        /**
+         * @var ValueObject $valueObject
+         */
         $valueObject = new ($this->className)($area, $name);
 
         $file = $valueObject->getClassFile();
 
-        $file->setDeclare((new DeclareModel())->setStrictTypes(true))
-            ->setNamespace($valueObject->getNamespace());
+        if (!$file->hasClass()) {
+            $file->setDeclare((new DeclareModel())->setStrictTypes(true))
+                ->setNamespace($valueObject->getNamespace());
 
-        $class = (new ClassModel($name))
-            ->setFinal(true);
+            $class = (new ClassModel($name))
+                ->setFinal(true);
 
-        $file->setClass($class);
+            $file->setClass($class);
 
-        $constructor = new ClassMethodModel('__construct');
-        $constructor->setPublic();
+            $constructor = new ClassMethodModel('__construct');
+            $constructor->setPublic();
 
-        $property = (new PropertyModel('value'))
-            ->setReadonly(true)
-            ->setPublic();
+            $property = (new PropertyModel('value'))
+                ->setReadonly(true)
+                ->setPublic();
 
-        $class
-            ->addProperty($property)
-            ->addMethod($constructor);
+            $class
+                ->addProperty($property)
+                ->addMethod($constructor);
 
-        $valueObject->setType(new StringType());
+            $valueObject->setType(new StringType());
+        }
 
         return $valueObject;
     }
