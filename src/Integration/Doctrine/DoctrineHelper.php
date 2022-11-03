@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SoureCode\DomainDrivenDesign\Doctrine;
+namespace SoureCode\DomainDrivenDesign\Integration\Doctrine;
 
 use DateInterval;
 use DateTime;
@@ -37,6 +37,21 @@ class DoctrineHelper
         $this->registry = $registry;
     }
 
+    public function escapeName(string $name): string
+    {
+        if ($this->isKeyword($name)) {
+            /**
+             * @var Connection $connection
+             */
+            $connection = $this->registry->getConnection();
+            $platform = $connection->getDatabasePlatform();
+
+            return $platform->quoteSingleIdentifier($name);
+        }
+
+        return $name;
+    }
+
     public function getPotentialTableName(ClassName|string $className): string
     {
         $entityManager = $this->registry->getManager();
@@ -50,7 +65,23 @@ class DoctrineHelper
         return $entityManager
             ->getConfiguration()
             ->getNamingStrategy()
-            ->classToTableName(strtolower($className));
+            ->classToTableName($className);
+    }
+
+    public function getPotentialColumnName(ClassName|string $propertyName): string
+    {
+        $entityManager = $this->registry->getManager();
+
+        if (!$entityManager instanceof EntityManagerInterface) {
+            throw new RuntimeException('ObjectManager is not an EntityManagerInterface.');
+        }
+
+        $propertyName = $propertyName instanceof ClassName ? $propertyName->getShortName() : $propertyName;
+
+        return $entityManager
+            ->getConfiguration()
+            ->getNamingStrategy()
+            ->propertyToColumnName($propertyName);
     }
 
     public function isKeyword(string $name): bool
@@ -91,26 +122,6 @@ class DoctrineHelper
         return $className->isSame(ClassName::fromString(DateInterval::class)) ||
             $className->isSame(ClassName::fromString(DateTime::class)) ||
             $className->isSame(ClassName::fromString(DateTimeImmutable::class));
-    }
-
-    public function getPropertyTypeForColumn(string $columnType): ?AbstractType
-    {
-        return match ($columnType) {
-            Types::STRING, Types::TEXT, Types::GUID, Types::BIGINT, Types::DECIMAL => new StringType(),
-            Types::ARRAY, Types::SIMPLE_ARRAY, Types::JSON => new ArrayType(),
-            Types::BOOLEAN => new BooleanType(),
-            Types::INTEGER, Types::SMALLINT => new IntegerType(),
-            Types::FLOAT => new FloatType(),
-            Types::DATETIME_MUTABLE, Types::DATETIMETZ_MUTABLE,
-            Types::DATE_MUTABLE, Types::TIME_MUTABLE => new ClassType(DateTimeInterface::class),
-            Types::DATETIME_IMMUTABLE, Types::DATETIMETZ_IMMUTABLE,
-            Types::DATE_IMMUTABLE, Types::TIME_IMMUTABLE => new ClassType(DateTimeImmutable::class),
-            Types::DATEINTERVAL => new ClassType(DateInterval::class),
-            Types::OBJECT => new ObjectType(),
-            'uuid' => new ClassType(Uuid::class),
-            'ulid' => new ClassType(Ulid::class),
-            default => null,
-        };
     }
 
     public function getTypeConstant(AbstractType $type): ?string

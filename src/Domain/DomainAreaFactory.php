@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SoureCode\DomainDrivenDesign\Factory;
+namespace SoureCode\DomainDrivenDesign\Domain;
 
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
-use SoureCode\DomainDrivenDesign\Domain\DomainArea;
+use SoureCode\DomainDrivenDesign\Model\ModelAreaFactory;
+use SoureCode\DomainDrivenDesign\ValueObject\ValueObjectAreaFactory;
 
 class DomainAreaFactory
 {

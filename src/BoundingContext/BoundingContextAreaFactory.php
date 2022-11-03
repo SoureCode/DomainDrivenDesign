@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SoureCode\DomainDrivenDesign\Factory;
+namespace SoureCode\DomainDrivenDesign\BoundingContext;
 
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
-use SoureCode\DomainDrivenDesign\BoundingContext\BoundingContextArea;
+use SoureCode\DomainDrivenDesign\Domain\DomainAreaFactory;
 
 class BoundingContextAreaFactory
 {

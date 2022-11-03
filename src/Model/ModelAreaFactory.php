@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SoureCode\DomainDrivenDesign\Factory;
+namespace SoureCode\DomainDrivenDesign\Model;
 
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
-use SoureCode\DomainDrivenDesign\Domain\ModelArea;
 
 class ModelAreaFactory
 {
-    private ModelFactory $modelFactory;
+    private ModelFactoryInterface $modelFactory;
 
-    public function __construct(ModelFactory $modelFactory)
+    public function __construct(ModelFactoryInterface $modelFactory)
     {
         $this->modelFactory = $modelFactory;
     }

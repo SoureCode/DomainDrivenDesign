@@ -7,7 +7,7 @@ namespace SoureCode\DomainDrivenDesign\Tests\Area;
 use InvalidArgumentException;
 use Nyholm\NSA;
 use SoureCode\DomainDrivenDesign\Area\AbstractSubAreaFiles;
-use SoureCode\DomainDrivenDesign\Files\Model;
+use SoureCode\DomainDrivenDesign\Model\Model;
 
 class AreaFilesTraitTest extends AbstractTestCase
 {
@@ -32,7 +32,7 @@ class AreaFilesTraitTest extends AbstractTestCase
     public function testGetFileReturnsFileWhenAlreadyCreatedBefore(): void
     {
         NSA::setProperty($this->sut, 'files', [
-            'ExampleA' => $expected = new Model($this->doctrineHelper, $this->sut, 'ExampleA'),
+            'ExampleA' => $expected = new Model($this->sut, 'ExampleA'),
         ]);
 
         $file = $this->sut->getModel('ExampleA');
@@ -51,7 +51,7 @@ class AreaFilesTraitTest extends AbstractTestCase
     public function testHasFileReturnsTrueWhenAlreadyCreatedBefore(): void
     {
         NSA::setProperty($this->sut, 'files', [
-            'ExampleA' => new Model($this->doctrineHelper, $this->sut, 'ExampleA'),
+            'ExampleA' => new Model($this->sut, 'ExampleA'),
         ]);
 
         self::assertTrue($this->sut->hasModel('ExampleA'));
@@ -70,8 +70,8 @@ class AreaFilesTraitTest extends AbstractTestCase
     public function testGetFilesReturnsFilesWhenCreatedBefore(): void
     {
         NSA::setProperty($this->sut, 'files', [
-            'Foo' => new Model($this->doctrineHelper, $this->sut, 'Foo'),
-            'Bar' => new Model($this->doctrineHelper, $this->sut, 'Bar'),
+            'Foo' => new Model($this->sut, 'Foo'),
+            'Bar' => new Model($this->sut, 'Bar'),
         ]);
 
         $files = $this->sut->getModels();
@@ -103,7 +103,7 @@ class AreaFilesTraitTest extends AbstractTestCase
     public function testCreateFileReturnsFileWhenCreatedBefore(): void
     {
         NSA::setProperty($this->sut, 'files', [
-            'Foo' => $expected = new Model($this->doctrineHelper, $this->sut, 'Foo'),
+            'Foo' => $expected = new Model($this->sut, 'Foo'),
         ]);
 
         $file = $this->sut->createModel('Foo');

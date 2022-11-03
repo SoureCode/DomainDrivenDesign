@@ -5,17 +5,21 @@ declare(strict_types=1);
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Proxy\Proxy;
 use Doctrine\Persistence\AbstractManagerRegistry;
-use SoureCode\DomainDrivenDesign\Doctrine\DoctrineHelper;
-use SoureCode\DomainDrivenDesign\DomainDriveDesign;
-use SoureCode\DomainDrivenDesign\Factory\BoundingContextAreaFactory;
-use SoureCode\DomainDrivenDesign\Factory\DomainAreaFactory;
-use SoureCode\DomainDrivenDesign\Factory\ModelAreaFactory;
-use SoureCode\DomainDrivenDesign\Factory\ModelFactory;
-use SoureCode\DomainDrivenDesign\Factory\ValueObjectAreaFactory;
-use SoureCode\DomainDrivenDesign\Factory\ValueObjectFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\BoundingContextAreaFactory;
+use SoureCode\DomainDrivenDesign\Domain\DomainAreaFactory;
+use SoureCode\DomainDrivenDesign\DomainDrivenDesign;
+use SoureCode\DomainDrivenDesign\Integration\Doctrine\DoctrineHelper;
+use SoureCode\DomainDrivenDesign\Integration\Doctrine\Model\DoctrineModelFactory;
+use SoureCode\DomainDrivenDesign\Integration\Doctrine\ValueObject\DoctrineValueObject;
+use SoureCode\DomainDrivenDesign\Integration\Doctrine\ValueObject\DoctrineValueObjectFactory;
+use SoureCode\DomainDrivenDesign\Model\ModelAreaFactory;
+use SoureCode\DomainDrivenDesign\Model\ModelFactory;
+use SoureCode\DomainDrivenDesign\ValueObject\ValueObjectAreaFactory;
+use SoureCode\DomainDrivenDesign\ValueObject\ValueObjectFactory;
 use SoureCode\DomainDrivenDesign\Writer\FilesystemWriter;
 use SoureCode\PhpObjectModel\Type\ClassType;
 use Symfony\Component\Filesystem\Filesystem;
@@ -34,6 +38,8 @@ $useSimpleAnnotationReader = false;
 $config = ORMSetup::createAnnotationMetadataConfiguration([
     __DIR__ . '/App',
 ], $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
+$namingStrategy = new UnderscoreNamingStrategy(CASE_LOWER, true);
+$config->setNamingStrategy($namingStrategy);
 
 // database configuration parameters
 $conn = [
@@ -73,13 +79,19 @@ $registry = new Registry([
 ]);
 
 $doctrineHelper = new DoctrineHelper($registry);
-$valueObjectFactory = new ValueObjectFactory($doctrineHelper);
-$modelFactory = new ModelFactory($doctrineHelper);
-$valueObjectAreaFactory = new ValueObjectAreaFactory($valueObjectFactory);
-$modelAreaFactory = new ModelAreaFactory($modelFactory);
+
+$valueObjectFactory = new ValueObjectFactory(DoctrineValueObject::class);
+$doctrineValueObjectFactory = new DoctrineValueObjectFactory($valueObjectFactory, $doctrineHelper);
+
+$modelFactory = new ModelFactory();
+$doctrineModelFactory = new DoctrineModelFactory($modelFactory, $doctrineHelper);
+
+$valueObjectAreaFactory = new ValueObjectAreaFactory($doctrineValueObjectFactory);
+$modelAreaFactory = new ModelAreaFactory($doctrineModelFactory);
+
 $domainAreaFactory = new DomainAreaFactory($modelAreaFactory, $valueObjectAreaFactory);
 $boundingContextAreaFactory = new BoundingContextAreaFactory($domainAreaFactory);
-$ddd = new DomainDriveDesign($boundingContextAreaFactory, __DIR__ . '/src', 'App');
+$ddd = new DomainDrivenDesign($boundingContextAreaFactory, __DIR__ . '/src', 'App');
 
 if (!$ddd->hasBoundingContext('User')) {
     $ddd->createBoundingContext('User');
@@ -91,10 +103,13 @@ $domain = $userBoundingContext->domain();
 $userModel = $domain->createModel('User');
 $userIdValueObject = $domain->createValueObject('UserId');
 $userIdValueObject
-    ->setType(new ClassType(Ulid::class), false)
+    ->setType(new ClassType(Ulid::class))
+    ->setPassOrConstruct()
     ->setColumnName('id');
 
-$emailValueObject = $domain->createValueObject('Email');
+$emailValueObject = $domain->createValueObject('Email')
+    ->setColumnName('email')
+    ->setPass();
 $userModel->addProperty($userIdValueObject, 'id', false);
 $userModel->addProperty($emailValueObject);
 

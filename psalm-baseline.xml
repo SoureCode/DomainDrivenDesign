@@ -23,37 +23,46 @@
       <code>T[]</code>
     </InvalidReturnType>
   </file>
-  <file src="src/Doctrine/DoctrineHelper.php">
+  <file src="src/Integration/Doctrine/DoctrineHelper.php">
     <ArgumentTypeCoercion occurrences="1">
-      <code>strtolower($className)</code>
+      <code>$className</code>
     </ArgumentTypeCoercion>
-    <DeprecatedConstant occurrences="2">
-      <code>Types::ARRAY</code>
-      <code>Types::OBJECT</code>
-    </DeprecatedConstant>
   </file>
-  <file src="src/Files/Model.php">
-    <InvalidArgument occurrences="2">
-      <code>new BooleanValue(false)</code>
-      <code>new StringValue('"' . $tableName . '"')</code>
+  <file src="src/Integration/Doctrine/Model/DoctrineModelFactory.php">
+    <InvalidArgument occurrences="1">
+      <code>new StringValue($escapedTableName)</code>
     </InvalidArgument>
   </file>
-  <file src="src/Files/ValueObject.php">
-    <InvalidArgument occurrences="3">
+  <file src="src/Integration/Doctrine/ValueObject/DoctrineValueObject.php">
+    <InvalidArgument occurrences="2">
       <code>$value</code>
       <code>new StringValue($columnName)</code>
     </InvalidArgument>
-    <MixedArgument occurrences="1">
-      <code>$type-&gt;getClassName()-&gt;getShortName()</code>
-    </MixedArgument>
-    <MixedMethodCall occurrences="1">
-      <code>getShortName</code>
-    </MixedMethodCall>
+    <MissingReturnType occurrences="1">
+      <code>setDoctrineHelper</code>
+    </MissingReturnType>
     <TypeDoesNotContainType occurrences="1">
       <code>$value instanceof StringValue</code>
     </TypeDoesNotContainType>
-    <UndefinedMethod occurrences="1">
-      <code>getClassName</code>
-    </UndefinedMethod>
+  </file>
+  <file src="src/Integration/Doctrine/ValueObject/DoctrineValueObjectFactory.php">
+    <InvalidArgument occurrences="1">
+      <code>new StringValue($escapedColumnName)</code>
+    </InvalidArgument>
+  </file>
+  <file src="src/Model/Model.php">
+    <InvalidArgument occurrences="1">
+      <code>new BooleanValue(false)</code>
+    </InvalidArgument>
+  </file>
+  <file src="src/ValueObject/ValueObject.php">
+    <InvalidArgument occurrences="1">
+      <code>new NullValue()</code>
+    </InvalidArgument>
+  </file>
+  <file src="src/ValueObject/ValueObjectFactory.php">
+    <UnsafeInstantiation occurrences="1">
+      <code>new ($this-&gt;className)($area, $name)</code>
+    </UnsafeInstantiation>
   </file>
 </files>

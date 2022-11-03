@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SoureCode\DomainDrivenDesign\Writer;
+namespace SoureCode\DomainDrivenDesign\Integration\Maker\Writer;
 
+use SoureCode\DomainDrivenDesign\Writer\WriterInterface;
 use Symfony\Bundle\MakerBundle\Generator;
 
 class MakerBundleWriter implements WriterInterface

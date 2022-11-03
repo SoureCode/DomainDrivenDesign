@@ -13,8 +13,8 @@ final class UserId
     #[ORM\Column(name: 'id', type: 'ulid')]
     public readonly Ulid $value;
 
-    public function __construct()
+    public function __construct(?Ulid $value = null)
     {
-        $this->value = new Ulid();
+        $this->value = $value ?? new Ulid();
     }
 }

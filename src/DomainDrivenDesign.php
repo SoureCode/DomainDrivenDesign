@@ -6,10 +6,10 @@ namespace SoureCode\DomainDrivenDesign;
 
 use SoureCode\DomainDrivenDesign\Area\AbstractArea;
 use SoureCode\DomainDrivenDesign\BoundingContext\BoundingContextArea;
-use SoureCode\DomainDrivenDesign\Factory\BoundingContextAreaFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\BoundingContextAreaFactory;
 use SoureCode\PhpObjectModel\ValueObject\NamespaceName;
 
-class DomainDriveDesign extends AbstractArea
+class DomainDrivenDesign extends AbstractArea
 {
     private BoundingContextAreaFactory $boundingContextAreaFactory;
 

@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SoureCode\DomainDrivenDesign\Factory;
+namespace SoureCode\DomainDrivenDesign\ValueObject;
 
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
-use SoureCode\DomainDrivenDesign\Domain\ValueObjectArea;
 
 class ValueObjectAreaFactory
 {
-    private ValueObjectFactory $valueObjectFactory;
+    private ValueObjectFactoryInterface $valueObjectFactory;
 
-    public function __construct(ValueObjectFactory $valueObjectFactory)
+    public function __construct(ValueObjectFactoryInterface $valueObjectFactory)
     {
         $this->valueObjectFactory = $valueObjectFactory;
     }

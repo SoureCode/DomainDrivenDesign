@@ -7,7 +7,7 @@ namespace SoureCode\DomainDrivenDesign\BoundingContext;
 use SoureCode\DomainDrivenDesign\Area\AbstractSubArea;
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
 use SoureCode\DomainDrivenDesign\Domain\DomainArea;
-use SoureCode\DomainDrivenDesign\Factory\DomainAreaFactory;
+use SoureCode\DomainDrivenDesign\Domain\DomainAreaFactory;
 
 class BoundingContextArea extends AbstractSubArea
 {

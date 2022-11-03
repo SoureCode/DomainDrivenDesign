@@ -4,27 +4,21 @@ declare(strict_types=1);
 
 namespace SoureCode\DomainDrivenDesign\Tests\Area;
 
-use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
-use SoureCode\DomainDrivenDesign\Doctrine\DoctrineHelper;
-use SoureCode\DomainDrivenDesign\DomainDriveDesign;
-use SoureCode\DomainDrivenDesign\Factory\BoundingContextAreaFactory;
-use SoureCode\DomainDrivenDesign\Factory\DomainAreaFactory;
-use SoureCode\DomainDrivenDesign\Factory\ModelAreaFactory;
-use SoureCode\DomainDrivenDesign\Factory\ModelFactory;
-use SoureCode\DomainDrivenDesign\Factory\ValueObjectAreaFactory;
-use SoureCode\DomainDrivenDesign\Factory\ValueObjectFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\BoundingContextAreaFactory;
+use SoureCode\DomainDrivenDesign\Domain\DomainAreaFactory;
+use SoureCode\DomainDrivenDesign\DomainDrivenDesign;
+use SoureCode\DomainDrivenDesign\Model\ModelAreaFactory;
+use SoureCode\DomainDrivenDesign\Model\ModelFactory;
+use SoureCode\DomainDrivenDesign\ValueObject\ValueObject;
+use SoureCode\DomainDrivenDesign\ValueObject\ValueObjectAreaFactory;
+use SoureCode\DomainDrivenDesign\ValueObject\ValueObjectFactory;
 
 abstract class AbstractTestCase extends TestCase
 {
     protected ?BoundingContextAreaFactory $boundingContextAreaFactory = null;
 
-    protected ?DomainDriveDesign $ddd = null;
-
-    /**
-     * @var (Stub&DomainAreaFactory)|null
-     */
-    protected ?object $doctrineHelper = null;
+    protected ?DomainDrivenDesign $ddd = null;
 
     protected ?DomainAreaFactory $domainAreaFactory = null;
 
@@ -36,30 +30,13 @@ abstract class AbstractTestCase extends TestCase
 
     public function setUp(): void
     {
-        $this->doctrineHelper = $this->createStub(DoctrineHelper::class);
-
-        $this->doctrineHelper
-            ->method('getPotentialTableName')
-            ->willReturnCallback(function (string $className) {
-                return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $className));
-            });
-
-        $this->doctrineHelper
-            ->method('isKeyword')
-            ->willReturnCallback(function (string $keyword) {
-                return in_array(strtolower($keyword), [
-                    'user',
-                    'group',
-                ]);
-            });
-
-        $this->valueObjectFactory = new ValueObjectFactory($this->doctrineHelper);
-        $this->modelFactory = new ModelFactory($this->doctrineHelper);
+        $this->valueObjectFactory = new ValueObjectFactory(ValueObject::class);
+        $this->modelFactory = new ModelFactory();
         $this->valueObjectAreaFactory = new ValueObjectAreaFactory($this->valueObjectFactory);
         $this->modelAreaFactory = new ModelAreaFactory($this->modelFactory);
         $this->domainAreaFactory = new DomainAreaFactory($this->modelAreaFactory, $this->valueObjectAreaFactory);
         $this->boundingContextAreaFactory = new BoundingContextAreaFactory($this->domainAreaFactory);
-        $this->ddd = new DomainDriveDesign($this->boundingContextAreaFactory, __DIR__ . '/../Fixtures', 'App');
+        $this->ddd = new DomainDrivenDesign($this->boundingContextAreaFactory, __DIR__ . '/../Fixtures', 'App');
     }
 
     public function tearDown(): void

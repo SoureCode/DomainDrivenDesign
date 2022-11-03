@@ -2,18 +2,16 @@
 
 declare(strict_types=1);
 
-namespace SoureCode\DomainDrivenDesign\Domain;
+namespace SoureCode\DomainDrivenDesign\ValueObject;
 
 use SoureCode\DomainDrivenDesign\Area\AbstractSubAreaFiles;
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
-use SoureCode\DomainDrivenDesign\Factory\ValueObjectFactory;
-use SoureCode\DomainDrivenDesign\Files\ValueObject;
 
 final class ValueObjectArea extends AbstractSubAreaFiles
 {
-    private ValueObjectFactory $valueObjectFactory;
+    private ValueObjectFactoryInterface $valueObjectFactory;
 
-    public function __construct(ValueObjectFactory $valueObjectFactory, AreaInterface $parent, string $name)
+    public function __construct(ValueObjectFactoryInterface $valueObjectFactory, AreaInterface $parent, string $name)
     {
         parent::__construct($parent, $name);
 

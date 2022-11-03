@@ -2,18 +2,16 @@
 
 declare(strict_types=1);
 
-namespace SoureCode\DomainDrivenDesign\Domain;
+namespace SoureCode\DomainDrivenDesign\Model;
 
 use SoureCode\DomainDrivenDesign\Area\AbstractSubAreaFiles;
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
-use SoureCode\DomainDrivenDesign\Factory\ModelFactory;
-use SoureCode\DomainDrivenDesign\Files\Model;
 
 final class ModelArea extends AbstractSubAreaFiles
 {
-    private ModelFactory $modelFactory;
+    private ModelFactoryInterface $modelFactory;
 
-    public function __construct(ModelFactory $modelFactory, AreaInterface $parent, string $name)
+    public function __construct(ModelFactoryInterface $modelFactory, AreaInterface $parent, string $name)
     {
         parent::__construct($parent, $name);
         $this->modelFactory = $modelFactory;

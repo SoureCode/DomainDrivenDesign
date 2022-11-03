@@ -6,10 +6,12 @@ namespace SoureCode\DomainDrivenDesign\Domain;
 
 use SoureCode\DomainDrivenDesign\Area\AbstractSubArea;
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
-use SoureCode\DomainDrivenDesign\Factory\ModelAreaFactory;
-use SoureCode\DomainDrivenDesign\Factory\ValueObjectAreaFactory;
-use SoureCode\DomainDrivenDesign\Files\Model;
-use SoureCode\DomainDrivenDesign\Files\ValueObject;
+use SoureCode\DomainDrivenDesign\Model\Model;
+use SoureCode\DomainDrivenDesign\Model\ModelArea;
+use SoureCode\DomainDrivenDesign\Model\ModelAreaFactory;
+use SoureCode\DomainDrivenDesign\ValueObject\ValueObject;
+use SoureCode\DomainDrivenDesign\ValueObject\ValueObjectArea;
+use SoureCode\DomainDrivenDesign\ValueObject\ValueObjectAreaFactory;
 
 final class DomainArea extends AbstractSubArea
 {

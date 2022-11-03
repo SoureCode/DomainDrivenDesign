@@ -6,6 +6,8 @@ namespace SoureCode\DomainDrivenDesign\Area;
 
 use SoureCode\DomainDrivenDesign\Writer\WriterInterface;
 use SoureCode\PhpObjectModel\File\ClassFile;
+use SoureCode\PhpObjectModel\Model\ClassModel;
+use SoureCode\PhpObjectModel\Node\NodeFinder;
 use SoureCode\PhpObjectModel\ValueObject\NamespaceName;
 use Symfony\Component\Filesystem\Path;
 
@@ -17,10 +19,13 @@ abstract class AbstractAreaFile implements AreaFileInterface
 
     private ?ClassFile $classFile = null;
 
+    protected NodeFinder $finder;
+
     public function __construct(AreaInterface $area, string $name)
     {
         $this->area = $area;
         $this->name = $name;
+        $this->finder = new NodeFinder();
     }
 
     public function getNamespace(): NamespaceName
@@ -36,6 +41,11 @@ abstract class AbstractAreaFile implements AreaFileInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getClass(): ClassModel
+    {
+        return $this->getClassFile()->getClass();
     }
 
     public function getFile(): string
