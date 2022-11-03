@@ -12,6 +12,7 @@ use SoureCode\DomainDrivenDesign\Model\Model;
 use SoureCode\DomainDrivenDesign\Model\ModelFactoryInterface;
 use SoureCode\PhpObjectModel\Model\ArgumentModel;
 use SoureCode\PhpObjectModel\Model\AttributeModel;
+use SoureCode\PhpObjectModel\Model\UseModel;
 use SoureCode\PhpObjectModel\Value\StringValue;
 
 class DoctrineModelFactory implements ModelFactoryInterface
@@ -32,25 +33,34 @@ class DoctrineModelFactory implements ModelFactoryInterface
 
         $file = $model->getClassFile();
 
-        $file->addUse('Doctrine\\ORM\\Mapping', 'ORM');
+        $useModel = new UseModel('Doctrine\\ORM\\Mapping', 'ORM');
+
+        if (!$file->hasUse($useModel)) {
+            $file->addUse($useModel);
+        }
 
         $class = $file->getClass();
-        $class->addAttribute(Entity::class);
 
-        if ($this->doctrineHelper->isKeyword($name)) {
-            $tableAttribute = new AttributeModel(Table::class);
+        if (!$class->hasAttribute(Entity::class)) {
+            $class->addAttribute(Entity::class);
+        }
 
-            $tableName = $this->doctrineHelper->getPotentialTableName($name);
-            $escapedTableName = $this->doctrineHelper->escapeName($tableName);
+        if (!$class->hasAttribute(Table::class)) {
+            if ($this->doctrineHelper->isKeyword($name)) {
+                $tableAttribute = new AttributeModel(Table::class);
 
-            $tableAttribute->setArgument(
-                new ArgumentModel(
-                    'name',
-                    new StringValue($escapedTableName)
-                )
-            );
+                $tableName = $this->doctrineHelper->getPotentialTableName($name);
+                $escapedTableName = $this->doctrineHelper->escapeName($tableName);
 
-            $class->addAttribute($tableAttribute);
+                $tableAttribute->setArgument(
+                    new ArgumentModel(
+                        'name',
+                        new StringValue($escapedTableName)
+                    )
+                );
+
+                $class->addAttribute($tableAttribute);
+            }
         }
 
         return $model;

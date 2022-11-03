@@ -16,11 +16,15 @@ class ModelFactory implements ModelFactoryInterface
 
         $file = $model->getClassFile();
 
-        if(!$file->hasClass()) {
-            $file
-                ->setDeclare((new DeclareModel())->setStrictTypes(true))
-                ->setNamespace($model->getNamespace());
+        if(!$file->hasDeclare()) {
+            $file->setDeclare((new DeclareModel())->setStrictTypes(true));
+        }
 
+        if(!$file->hasNamespace()) {
+            $file->setNamespace($model->getNamespace());
+        }
+
+        if (!$file->hasClass()) {
             $file->setClass(new ClassModel($name));
         }
 

@@ -12,6 +12,7 @@ use SoureCode\DomainDrivenDesign\ValueObject\ValueObject;
 use SoureCode\DomainDrivenDesign\ValueObject\ValueObjectFactoryInterface;
 use SoureCode\PhpObjectModel\Model\ArgumentModel;
 use SoureCode\PhpObjectModel\Model\AttributeModel;
+use SoureCode\PhpObjectModel\Model\UseModel;
 use SoureCode\PhpObjectModel\Value\StringValue;
 
 class DoctrineValueObjectFactory implements ValueObjectFactoryInterface
@@ -35,25 +36,34 @@ class DoctrineValueObjectFactory implements ValueObjectFactoryInterface
         $valueObject->setDoctrineHelper($this->doctrineHelper);
         $file = $valueObject->getClassFile();
 
-        $file->addUse('Doctrine\\ORM\\Mapping', 'ORM');
+        $useModel = new UseModel('Doctrine\\ORM\\Mapping', 'ORM');
+
+        if (!$file->hasUse($useModel)) {
+            $file->addUse($useModel);
+        }
 
         $class = $file->getClass();
 
-        $class->addAttribute(Embeddable::class);
-
-        $columnName = $this->doctrineHelper->getPotentialColumnName($name);
-        $escapedColumnName = $this->doctrineHelper->escapeName($columnName);
-
-        $columnAttribute = new AttributeModel(Column::class);
-        $columnAttribute->setArgument(
-            new ArgumentModel(
-                'name',
-                new StringValue($escapedColumnName)
-            )
-        );
+        if (!$class->hasAttribute(Embeddable::class)) {
+            $class->addAttribute(Embeddable::class);
+        }
 
         $property = $class->getProperty('value');
-        $property->addAttribute($columnAttribute);
+
+        if (!$property->hasAttribute(Column::class)) {
+            $columnName = $this->doctrineHelper->getPotentialColumnName($name);
+            $escapedColumnName = $this->doctrineHelper->escapeName($columnName);
+
+            $columnAttribute = new AttributeModel(Column::class);
+            $columnAttribute->setArgument(
+                new ArgumentModel(
+                    'name',
+                    new StringValue($escapedColumnName)
+                )
+            );
+
+            $property->addAttribute($columnAttribute);
+        }
 
         return $valueObject;
     }
