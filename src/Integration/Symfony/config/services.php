@@ -55,6 +55,7 @@ return static function (ContainerConfigurator $container): void {
         ]);
 
     $services->set($name('domain_driven_design'), DomainDrivenDesign::class)
+        ->alias(DomainDrivenDesign::class, $name('domain_driven_design'))
         ->public()
         ->args([
             service($name('bounding_context_area_factory')),
@@ -72,14 +73,12 @@ return static function (ContainerConfigurator $container): void {
     $services->set($name('doctrine_value_object_factory'), DoctrineValueObjectFactory::class)
         ->decorate($name('value_object_factory'))
         ->args([
-            service($name('value_object_factory')),
             service($name('doctrine_helper')),
         ]);
 
     $services->set($name('doctrine_model_factory'), DoctrineModelFactory::class)
         ->decorate($name('model_factory'))
         ->args([
-            service($name('model_factory')),
             service($name('doctrine_helper')),
         ]);
 };
