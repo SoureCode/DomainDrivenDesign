@@ -73,12 +73,14 @@ return static function (ContainerConfigurator $container): void {
     $services->set($name('doctrine_value_object_factory'), DoctrineValueObjectFactory::class)
         ->decorate($name('value_object_factory'))
         ->args([
+            service($name('value_object_factory.inner')),
             service($name('doctrine_helper')),
         ]);
 
     $services->set($name('doctrine_model_factory'), DoctrineModelFactory::class)
         ->decorate($name('model_factory'))
         ->args([
+            service($name('model_factory.inner')),
             service($name('doctrine_helper')),
         ]);
 };
