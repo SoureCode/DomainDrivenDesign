@@ -55,13 +55,13 @@ return static function (ContainerConfigurator $container): void {
         ]);
 
     $services->set($name('domain_driven_design'), DomainDrivenDesign::class)
-        ->alias(DomainDrivenDesign::class, $name('domain_driven_design'))
         ->public()
         ->args([
             service($name('bounding_context_area_factory')),
             param($name('directory')),
             param($name('namespace')),
-        ]);
+        ])
+        ->alias(DomainDrivenDesign::class, $name('domain_driven_design'));
 
     // Doctrine integration
     // @todo enable this only if doctrine is installed
