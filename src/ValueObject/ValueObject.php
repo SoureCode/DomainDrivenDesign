@@ -108,16 +108,21 @@ class ValueObject extends AbstractAreaFile
     public function setType(AbstractType $type): self
     {
         $class = $this->getClassFile()->getClass();
-
         $property = $class->getProperty('value');
+
+        $currentType = $property->getType();
+        $isPass = $this->isPass();
+        $isConstruct = $currentType instanceof ClassType && $this->isConstruct();
+        $isPassOrConstruct = $currentType instanceof ClassType && $this->isPassOrConstruct();
+
         $property->setType($type);
 
         // just set the constructor again to update the type, performance?
-        if ($this->isPass()) {
+        if ($isPass) {
             $this->setPass();
-        } elseif ($type instanceof ClassType && $this->isConstruct()) {
+        } elseif ($isConstruct) {
             $this->setConstruct();
-        } elseif ($type instanceof ClassType && $this->isPassOrConstruct()) {
+        } elseif ($isPassOrConstruct) {
             $this->setPassOrConstruct();
         }
 
