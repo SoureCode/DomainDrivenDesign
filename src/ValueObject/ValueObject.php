@@ -31,7 +31,8 @@ class ValueObject extends AbstractAreaFile
 
         return AbstractNodeComparer::compareNodes(
             $constructor->getNode(),
-            $this->createPassConstructorMethod($class)->getNode()
+            $this->createPassConstructorMethod($class)->getNode(),
+            true,
         );
     }
 
@@ -74,7 +75,8 @@ class ValueObject extends AbstractAreaFile
 
         return AbstractNodeComparer::compareNodes(
             $constructor->getNode(),
-            $this->createConstructConstructorMethod($class)->getNode()
+            $this->createConstructConstructorMethod($class)->getNode(),
+            true,
         );
     }
 
@@ -101,7 +103,8 @@ class ValueObject extends AbstractAreaFile
 
         return AbstractNodeComparer::compareNodes(
             $constructor->getNode(),
-            $this->createPassOrConstructConstructorMethod($class)->getNode()
+            $this->createPassOrConstructConstructorMethod($class)->getNode(),
+            true,
         );
     }
 
