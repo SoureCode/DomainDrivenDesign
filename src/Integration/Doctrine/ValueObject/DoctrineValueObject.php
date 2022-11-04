@@ -11,6 +11,7 @@ use SoureCode\DomainDrivenDesign\Integration\Doctrine\DoctrineHelper;
 use SoureCode\DomainDrivenDesign\ValueObject\ValueObject;
 use SoureCode\PhpObjectModel\Model\ArgumentModel;
 use SoureCode\PhpObjectModel\Type\AbstractType;
+use SoureCode\PhpObjectModel\Type\ClassType;
 use SoureCode\PhpObjectModel\Value\ClassConstValue;
 use SoureCode\PhpObjectModel\Value\StringValue;
 
@@ -57,8 +58,24 @@ class DoctrineValueObject extends ValueObject
         if ($this->doctrineHelper && !$this->doctrineHelper->canColumnTypeBeInferredByPropertyType($type)) {
             $constName = $this->doctrineHelper->getTypeConstant($type);
 
+            $class = $this->getClass();
+            $property = $class->getProperty('value');
+            $attribute = $property->getAttribute(Column::class);
+
             if (null === $constName) {
-                throw new \LogicException('Could not find constant for type ' . $type::class);
+                // just set the type itself
+                if ($type instanceof ClassType) {
+                    $attribute->setArgument(
+                        new ArgumentModel(
+                            'type',
+                            new ClassConstValue($type->getClassName()),
+                        )
+                    );
+
+                    return $this;
+                }
+
+                throw new LogicException('Type is not supported.');
             }
 
             $value = new ClassConstValue(Types::class, $constName);
@@ -66,10 +83,6 @@ class DoctrineValueObject extends ValueObject
             if ('uuid' === $constName || 'ulid' === $constName) {
                 $value = new StringValue($constName);
             }
-
-            $class = $this->getClass();
-            $property = $class->getProperty('value');
-            $attribute = $property->getAttribute(Column::class);
 
             $attribute->setArgument(
                 new ArgumentModel(

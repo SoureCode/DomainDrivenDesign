@@ -9,7 +9,6 @@ use SoureCode\PhpObjectModel\Model\ClassMethodModel;
 use SoureCode\PhpObjectModel\Model\ClassModel;
 use SoureCode\PhpObjectModel\Model\DeclareModel;
 use SoureCode\PhpObjectModel\Model\PropertyModel;
-use SoureCode\PhpObjectModel\Type\StringType;
 
 class ValueObjectFactory implements ValueObjectFactoryInterface
 {
@@ -59,7 +58,7 @@ class ValueObjectFactory implements ValueObjectFactoryInterface
             $class->addMethod($constructor);
         }
 
-        if(!$class->hasProperty('value')) {
+        if (!$class->hasProperty('value')) {
             $property = (new PropertyModel('value'))
                 ->setReadonly(true)
                 ->setPublic();

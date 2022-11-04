@@ -34,8 +34,9 @@
     </InvalidArgument>
   </file>
   <file src="src/Integration/Doctrine/ValueObject/DoctrineValueObject.php">
-    <InvalidArgument occurrences="2">
+    <InvalidArgument occurrences="3">
       <code>$value</code>
+      <code>new ClassConstValue($type-&gt;getClassName())</code>
       <code>new StringValue($columnName)</code>
     </InvalidArgument>
     <MissingReturnType occurrences="1">
@@ -61,6 +62,9 @@
     </InvalidArgument>
   </file>
   <file src="src/ValueObject/ValueObjectFactory.php">
+    <UnnecessaryVarAnnotation occurrences="1">
+      <code>ValueObject</code>
+    </UnnecessaryVarAnnotation>
     <UnsafeInstantiation occurrences="1">
       <code>new ($this-&gt;className)($area, $name)</code>
     </UnsafeInstantiation>
