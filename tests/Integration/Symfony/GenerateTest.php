@@ -64,15 +64,15 @@ class GenerateTest extends AbstractTestCase
 
         $infrastructure->createRepository('User', RepositoryType::IN_MEMORY)
             ->getClass()
-            ->implementInterface($repositoryInterface);
+            ->implement($repositoryInterface);
 
         $infrastructure->createRepository('User', RepositoryType::DOCTRINE)
             ->getClass()
-            ->implementInterface($repositoryInterface);
+            ->implement($repositoryInterface);
 
         $infrastructure->createRepository('User', RepositoryType::UPSTREAM)
             ->getClass()
-            ->implementInterface($repositoryInterface);
+            ->implement($repositoryInterface);
 
         $ddd->write($this->writer);
 
