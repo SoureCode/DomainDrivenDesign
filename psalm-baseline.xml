@@ -1,72 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
-  <file src="src/Area/AbstractSubAreaFiles.php">
-    <MixedInferredReturnType occurrences="1">
-      <code>self</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1"/>
-    <UndefinedMethod occurrences="1">
-      <code>writeFiles</code>
-    </UndefinedMethod>
+<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+  <file src="src/BoundingContext/BoundingContextArea.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>$this-&gt;createSubArea('Infrastructure', $this-&gt;infrastructureAreaFactory-&gt;create(...))</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>InfrastructureAreaInterface</code>
+    </InvalidReturnType>
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$this-&gt;createSubArea('Domain', $this-&gt;domainAreaFactory-&gt;create(...))</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>DomainAreaInterface</code>
+    </MoreSpecificReturnType>
   </file>
-  <file src="src/Area/AreaFilesTrait.php">
-    <InvalidReturnType occurrences="3">
-      <code>T</code>
-      <code>T</code>
-      <code>T[]</code>
+  <file src="src/BoundingContext/Domain/DomainArea.php">
+    <LessSpecificReturnStatement occurrences="3">
+      <code>$this-&gt;createSubArea('Model', $this-&gt;modelAreaFactory-&gt;create(...))</code>
+      <code>$this-&gt;createSubArea('Repository', $this-&gt;repositoryAreaFactory-&gt;create(...))</code>
+      <code>$this-&gt;createSubArea('ValueObject', $this-&gt;valueObjectAreaFactory-&gt;create(...))</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="3">
+      <code>ModelArea</code>
+      <code>RepositoryArea</code>
+      <code>ValueObjectAreaInterface</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="src/BoundingContext/Domain/Model/ModelArea.php">
+    <LessSpecificReturnStatement occurrences="3">
+      <code>$this-&gt;createFile($name, $this-&gt;modelFactory-&gt;create(...))</code>
+      <code>$this-&gt;getFile($name, $this-&gt;modelFactory-&gt;create(...))</code>
+      <code>$this-&gt;getFiles($this-&gt;modelFactory-&gt;create(...))</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="3">
+      <code>ModelInterface</code>
+      <code>ModelInterface</code>
+      <code>ModelInterface[]</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="src/BoundingContext/Domain/Repository/RepositoryArea.php">
+    <LessSpecificReturnStatement occurrences="3">
+      <code>$this-&gt;createFile($name, $this-&gt;repositoryFactory-&gt;create(...))</code>
+      <code>$this-&gt;getFile($name, $this-&gt;repositoryFactory-&gt;create(...))</code>
+      <code>$this-&gt;getFiles($this-&gt;repositoryFactory-&gt;create(...))</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="3">
+      <code>RepositoryInterface</code>
+      <code>RepositoryInterface</code>
+      <code>RepositoryInterface[]</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="src/BoundingContext/Domain/Repository/RepositoryAreaFactory.php">
+    <LessSpecificReturnStatement occurrences="1">
+      <code>new ($this-&gt;repositoryAreaClass)($this-&gt;repositoryFactory, $area, $name)</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>RepositoryArea</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="src/BoundingContext/Domain/ValueObject/ValueObjectArea.php">
+    <LessSpecificReturnStatement occurrences="3">
+      <code>$this-&gt;createFile($name, $this-&gt;valueObjectFactory-&gt;create(...))</code>
+      <code>$this-&gt;getFile($name, $this-&gt;valueObjectFactory-&gt;create(...))</code>
+      <code>$this-&gt;getFiles($this-&gt;valueObjectFactory-&gt;create(...))</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="3">
+      <code>ValueObjectInterface</code>
+      <code>ValueObjectInterface</code>
+      <code>ValueObjectInterface[]</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="src/BoundingContext/Infrastructure/InfrastructureArea.php">
+    <InvalidArgument occurrences="1">
+      <code>$this-&gt;repositoryAreaFactory-&gt;create(...)</code>
+    </InvalidArgument>
+    <InvalidReturnStatement occurrences="1">
+      <code>$this-&gt;createSubArea('Repository', $this-&gt;repositoryAreaFactory-&gt;create(...))</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>RepositoryAreaInterface</code>
     </InvalidReturnType>
   </file>
-  <file src="src/Area/SubAreaTrait.php">
-    <InvalidReturnType occurrences="3">
-      <code>T</code>
-      <code>T</code>
-      <code>T[]</code>
-    </InvalidReturnType>
+  <file src="src/BoundingContext/Infrastructure/InfrastructureAreaFactory.php">
+    <LessSpecificReturnStatement occurrences="1">
+      <code>new ($this-&gt;className)($this-&gt;repositoryAreaFactory, $area, $name)</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>InfrastructureArea</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="src/BoundingContext/Infrastructure/Repository/RepositoryArea.php">
+    <LessSpecificReturnStatement occurrences="3">
+      <code>$this-&gt;createFile($this-&gt;getKey($name, $type), $factory-&gt;create(...))</code>
+      <code>$this-&gt;getFile($this-&gt;getKey($name, $type), $factory-&gt;create(...))</code>
+      <code>$this-&gt;getFiles($factory-&gt;create(...), $this-&gt;getPattern($type))</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="3">
+      <code>RepositoryInterface</code>
+      <code>RepositoryInterface</code>
+      <code>RepositoryInterface[]</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="src/DomainDrivenDesign.php">
+    <LessSpecificReturnStatement occurrences="3">
+      <code>$this-&gt;createSubArea($name, $this-&gt;boundingContextAreaFactory-&gt;create(...))</code>
+      <code>$this-&gt;getSubArea($name, $this-&gt;boundingContextAreaFactory-&gt;create(...))</code>
+      <code>$this-&gt;getSubAreas($this-&gt;boundingContextAreaFactory-&gt;create(...))</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="3">
+      <code>BoundingContextAreaInterface</code>
+      <code>BoundingContextAreaInterface</code>
+      <code>BoundingContextAreaInterface[]</code>
+    </MoreSpecificReturnType>
   </file>
   <file src="src/Integration/Doctrine/DoctrineHelper.php">
     <ArgumentTypeCoercion occurrences="1">
       <code>$className</code>
     </ArgumentTypeCoercion>
-  </file>
-  <file src="src/Integration/Doctrine/Model/DoctrineModelFactory.php">
-    <InvalidArgument occurrences="1">
-      <code>new StringValue($escapedTableName)</code>
-    </InvalidArgument>
-  </file>
-  <file src="src/Integration/Doctrine/ValueObject/DoctrineValueObject.php">
-    <InvalidArgument occurrences="3">
-      <code>$value</code>
-      <code>new ClassConstValue($type-&gt;getClassName())</code>
-      <code>new StringValue($columnName)</code>
-    </InvalidArgument>
-    <MissingReturnType occurrences="1">
-      <code>setDoctrineHelper</code>
-    </MissingReturnType>
-    <TypeDoesNotContainType occurrences="1">
-      <code>$value instanceof StringValue</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="src/Integration/Doctrine/ValueObject/DoctrineValueObjectFactory.php">
-    <InvalidArgument occurrences="1">
-      <code>new StringValue($escapedColumnName)</code>
-    </InvalidArgument>
-  </file>
-  <file src="src/Model/Model.php">
-    <InvalidArgument occurrences="1">
-      <code>new BooleanValue(false)</code>
-    </InvalidArgument>
-  </file>
-  <file src="src/ValueObject/ValueObject.php">
-    <InvalidArgument occurrences="1">
-      <code>new NullValue()</code>
-    </InvalidArgument>
-  </file>
-  <file src="src/ValueObject/ValueObjectFactory.php">
-    <UnnecessaryVarAnnotation occurrences="1">
-      <code>ValueObject</code>
-    </UnnecessaryVarAnnotation>
-    <UnsafeInstantiation occurrences="1">
-      <code>new ($this-&gt;className)($area, $name)</code>
-    </UnsafeInstantiation>
   </file>
 </files>

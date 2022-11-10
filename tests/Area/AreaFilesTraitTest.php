@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace SoureCode\DomainDrivenDesign\Tests\Area;
 
-use InvalidArgumentException;
 use Nyholm\NSA;
 use SoureCode\DomainDrivenDesign\Area\AbstractSubAreaFiles;
-use SoureCode\DomainDrivenDesign\Model\Model;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\Model;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelInterface;
 
 class AreaFilesTraitTest extends AbstractTestCase
 {
@@ -25,7 +25,7 @@ class AreaFilesTraitTest extends AbstractTestCase
 
         $file = $this->sut->getModel('ExampleA');
 
-        self::assertInstanceOf(Model::class, $file);
+        self::assertInstanceOf(ModelInterface::class, $file);
         self::assertCount(1, NSA::getProperty($this->sut, 'files'));
     }
 
@@ -43,7 +43,7 @@ class AreaFilesTraitTest extends AbstractTestCase
 
     public function testGetFileThrowsExceptionWhenFileDoesNotExist(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $this->sut->getModel('Foo');
     }
@@ -77,7 +77,7 @@ class AreaFilesTraitTest extends AbstractTestCase
         $files = $this->sut->getModels();
 
         self::assertCount(4, $files);
-        self::assertContainsOnlyInstancesOf(Model::class, $files);
+        self::assertContainsOnlyInstancesOf(ModelInterface::class, $files);
     }
 
     public function testGetFilesReturnsFilesWhenFilesExists(): void
@@ -85,7 +85,7 @@ class AreaFilesTraitTest extends AbstractTestCase
         $files = $this->sut->getModels();
 
         self::assertCount(2, $files);
-        self::assertContainsOnlyInstancesOf(Model::class, $files);
+        self::assertContainsOnlyInstancesOf(ModelInterface::class, $files);
     }
 
     // testCreateFile ReturnsFile WhenDoesNotCreatedBefore
@@ -95,7 +95,7 @@ class AreaFilesTraitTest extends AbstractTestCase
 
         $file = $this->sut->createModel('Foo');
 
-        self::assertInstanceOf(Model::class, $file);
+        self::assertInstanceOf(ModelInterface::class, $file);
         self::assertCount(1, NSA::getProperty($this->sut, 'files'));
     }
 

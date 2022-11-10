@@ -5,19 +5,28 @@ declare(strict_types=1);
 namespace SoureCode\DomainDrivenDesign\Area;
 
 use SoureCode\DomainDrivenDesign\Writer\WriterInterface;
+use SoureCode\PhpObjectModel\File\AbstractFile;
 use SoureCode\PhpObjectModel\File\ClassFile;
+use SoureCode\PhpObjectModel\File\InterfaceFile;
 use SoureCode\PhpObjectModel\Model\ClassModel;
+use SoureCode\PhpObjectModel\Model\InterfaceModel;
 use SoureCode\PhpObjectModel\Node\NodeFinder;
 use SoureCode\PhpObjectModel\ValueObject\NamespaceName;
 use Symfony\Component\Filesystem\Path;
 
+/**
+ * @template-covariant T of AbstractFile
+ */
 abstract class AbstractAreaFile implements AreaFileInterface
 {
     private readonly AreaInterface $area;
 
     private readonly string $name;
 
-    private ?ClassFile $classFile = null;
+    /**
+     * @psalm-var T
+     */
+    private ?AbstractFile $file = null;
 
     protected NodeFinder $finder;
 
@@ -26,6 +35,14 @@ abstract class AbstractAreaFile implements AreaFileInterface
         $this->area = $area;
         $this->name = $name;
         $this->finder = new NodeFinder();
+    }
+
+    /**
+     * @psalm-return class-string<T>
+     */
+    public function getFileTypeClassName(): string
+    {
+        return ClassFile::class;
     }
 
     public function getNamespace(): NamespaceName
@@ -43,35 +60,82 @@ abstract class AbstractAreaFile implements AreaFileInterface
         return $this->name;
     }
 
+    public function getClassName(): string
+    {
+        return $this->name;
+    }
+
     public function getClass(): ClassModel
     {
-        return $this->getClassFile()->getClass();
+        $file = $this->getFile();
+
+        if (!$file instanceof ClassFile) {
+            throw new \RuntimeException('File is not a class file.');
+        }
+
+        return $file->getClass();
     }
 
-    public function getFile(): string
+    public function getInterface(): InterfaceModel
     {
-        return Path::join($this->getDirectory(), $this->getName() . '.php');
+        $file = $this->getFile();
+
+        if (!$file instanceof InterfaceFile) {
+            throw new \RuntimeException('File is not a interface file.');
+        }
+
+        return $file->getInterface();
     }
 
-    public function getClassFile(): ClassFile
+    public function getFilePath(): string
     {
-        if (null === $this->classFile) {
-            if (file_exists($this->getFile())) {
-                $this->classFile = new ClassFile(file_get_contents($this->getFile()));
+        return Path::join($this->getDirectory(), $this->getClassName() . '.php');
+    }
+
+    /**
+     * @psalm-return T
+     */
+    public function getFile(): AbstractFile
+    {
+        if (null === $this->file) {
+            $filePath = $this->getFilePath();
+
+            if (file_exists($filePath)) {
+                $this->file = $this->openFile($filePath);
             } else {
-                $this->classFile = new ClassFile();
+                $this->file = $this->createFile();
             }
         }
 
-        return $this->classFile;
+        return $this->file;
     }
 
     public function write(WriterInterface $writer): self
     {
-        if (null !== $this->classFile) {
-            $writer->write($this->getFile(), $this->classFile->getSourceCode());
+        if (null !== $this->file) {
+            $writer->write($this->getFilePath(), $this->file->getSourceCode());
         }
 
         return $this;
+    }
+
+    /**
+     * @psalm-return T
+     */
+    private function openFile(string $filePath): AbstractFile
+    {
+        $className = $this->getFileTypeClassName();
+
+        return new ($className)(file_get_contents($filePath));
+    }
+
+    /**
+     * @psalm-return T
+     */
+    private function createFile(): AbstractFile
+    {
+        $className = $this->getFileTypeClassName();
+
+        return new ($className)();
     }
 }

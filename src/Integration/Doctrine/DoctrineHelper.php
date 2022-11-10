@@ -4,15 +4,10 @@ declare(strict_types=1);
 
 namespace SoureCode\DomainDrivenDesign\Integration\Doctrine;
 
-use DateInterval;
-use DateTime;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use RuntimeException;
 use SoureCode\PhpObjectModel\Type\AbstractType;
 use SoureCode\PhpObjectModel\Type\ArrayType;
 use SoureCode\PhpObjectModel\Type\BooleanType;
@@ -57,7 +52,7 @@ class DoctrineHelper
         $entityManager = $this->registry->getManager();
 
         if (!$entityManager instanceof EntityManagerInterface) {
-            throw new RuntimeException('ObjectManager is not an EntityManagerInterface.');
+            throw new \RuntimeException('ObjectManager is not an EntityManagerInterface.');
         }
 
         $className = $className instanceof ClassName ? $className->getShortName() : $className;
@@ -73,7 +68,7 @@ class DoctrineHelper
         $entityManager = $this->registry->getManager();
 
         if (!$entityManager instanceof EntityManagerInterface) {
-            throw new RuntimeException('ObjectManager is not an EntityManagerInterface.');
+            throw new \RuntimeException('ObjectManager is not an EntityManagerInterface.');
         }
 
         $propertyName = $propertyName instanceof ClassName ? $propertyName->getShortName() : $propertyName;
@@ -119,9 +114,9 @@ class DoctrineHelper
     {
         $className = $type->getClassName();
 
-        return $className->isSame(ClassName::fromString(DateInterval::class)) ||
-            $className->isSame(ClassName::fromString(DateTime::class)) ||
-            $className->isSame(ClassName::fromString(DateTimeImmutable::class));
+        return $className->isSame(ClassName::fromString(\DateInterval::class)) ||
+            $className->isSame(ClassName::fromString(\DateTime::class)) ||
+            $className->isSame(ClassName::fromString(\DateTimeImmutable::class));
     }
 
     public function getTypeConstant(AbstractType $type): ?string
@@ -144,9 +139,9 @@ class DoctrineHelper
         $class = $className->getName();
 
         return match ($class) {
-            DateInterval::class => Types::DATEINTERVAL,
-            DateTimeInterface::class => Types::DATETIME_MUTABLE,
-            DateTimeImmutable::class => Types::DATETIME_IMMUTABLE,
+            \DateInterval::class => Types::DATEINTERVAL,
+            \DateTimeInterface::class => Types::DATETIME_MUTABLE,
+            \DateTimeImmutable::class => Types::DATETIME_IMMUTABLE,
             Ulid::class => 'ulid',
             Uuid::class => 'uuid',
             default => null,

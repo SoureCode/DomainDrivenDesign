@@ -7,9 +7,9 @@ namespace SoureCode\DomainDrivenDesign\Integration\Doctrine\ValueObject;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Embeddable;
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectFactoryInterface;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectInterface;
 use SoureCode\DomainDrivenDesign\Integration\Doctrine\DoctrineHelper;
-use SoureCode\DomainDrivenDesign\ValueObject\ValueObject;
-use SoureCode\DomainDrivenDesign\ValueObject\ValueObjectFactoryInterface;
 use SoureCode\PhpObjectModel\Model\ArgumentModel;
 use SoureCode\PhpObjectModel\Model\AttributeModel;
 use SoureCode\PhpObjectModel\Model\UseModel;
@@ -27,14 +27,14 @@ class DoctrineValueObjectFactory implements ValueObjectFactoryInterface
         $this->doctrineHelper = $doctrineHelper;
     }
 
-    public function create(AreaInterface $area, string $name): ValueObject
+    public function create(AreaInterface $area, string $name): ValueObjectInterface
     {
         /**
          * @var DoctrineValueObject $valueObject
          */
         $valueObject = $this->valueObjectFactory->create($area, $name);
         $valueObject->setDoctrineHelper($this->doctrineHelper);
-        $file = $valueObject->getClassFile();
+        $file = $valueObject->getFile();
 
         $useModel = new UseModel('Doctrine\\ORM\\Mapping', 'ORM');
 

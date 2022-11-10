@@ -7,17 +7,17 @@ namespace SoureCode\DomainDrivenDesign\Integration\Doctrine\Model;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelFactoryInterface;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelInterface;
 use SoureCode\DomainDrivenDesign\Integration\Doctrine\DoctrineHelper;
-use SoureCode\DomainDrivenDesign\Model\Model;
-use SoureCode\DomainDrivenDesign\Model\ModelFactoryInterface;
 use SoureCode\PhpObjectModel\Model\ArgumentModel;
 use SoureCode\PhpObjectModel\Model\AttributeModel;
 use SoureCode\PhpObjectModel\Model\UseModel;
 use SoureCode\PhpObjectModel\Value\StringValue;
 
-class DoctrineModelFactory implements ModelFactoryInterface
+class DoctrineModelFactory implements \SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelFactoryInterface
 {
-    protected ModelFactoryInterface $modelFactory;
+    protected \SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelFactoryInterface $modelFactory;
 
     protected DoctrineHelper $doctrineHelper;
 
@@ -27,11 +27,11 @@ class DoctrineModelFactory implements ModelFactoryInterface
         $this->doctrineHelper = $doctrineHelper;
     }
 
-    public function create(AreaInterface $area, string $name): Model
+    public function create(AreaInterface $area, string $name): ModelInterface
     {
         $model = $this->modelFactory->create($area, $name);
 
-        $file = $model->getClassFile();
+        $file = $model->getFile();
 
         $useModel = new UseModel('Doctrine\\ORM\\Mapping', 'ORM');
 

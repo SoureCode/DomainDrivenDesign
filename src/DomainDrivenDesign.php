@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace SoureCode\DomainDrivenDesign;
 
 use SoureCode\DomainDrivenDesign\Area\AbstractArea;
-use SoureCode\DomainDrivenDesign\BoundingContext\BoundingContextArea;
 use SoureCode\DomainDrivenDesign\BoundingContext\BoundingContextAreaFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\BoundingContextAreaInterface;
 use SoureCode\PhpObjectModel\ValueObject\NamespaceName;
 
-class DomainDrivenDesign extends AbstractArea
+class DomainDrivenDesign extends AbstractArea implements DomainDrivenDesignInterface
 {
     private BoundingContextAreaFactory $boundingContextAreaFactory;
 
@@ -24,14 +24,14 @@ class DomainDrivenDesign extends AbstractArea
     }
 
     /**
-     * @return BoundingContextArea[]
+     * @return BoundingContextAreaInterface[]
      */
     public function getBoundingContexts(): array
     {
         return $this->getSubAreas($this->boundingContextAreaFactory->create(...));
     }
 
-    public function getBoundingContext(string $name): BoundingContextArea
+    public function getBoundingContext(string $name): BoundingContextAreaInterface
     {
         return $this->getSubArea($name, $this->boundingContextAreaFactory->create(...));
     }
@@ -41,7 +41,7 @@ class DomainDrivenDesign extends AbstractArea
         return $this->hasSubArea($name);
     }
 
-    public function createBoundingContext(string $name): BoundingContextArea
+    public function createBoundingContext(string $name): BoundingContextAreaInterface
     {
         return $this->createSubArea($name, $this->boundingContextAreaFactory->create(...));
     }

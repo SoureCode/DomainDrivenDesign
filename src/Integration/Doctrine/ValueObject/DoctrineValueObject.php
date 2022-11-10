@@ -6,9 +6,8 @@ namespace SoureCode\DomainDrivenDesign\Integration\Doctrine\ValueObject;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
-use LogicException;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObject;
 use SoureCode\DomainDrivenDesign\Integration\Doctrine\DoctrineHelper;
-use SoureCode\DomainDrivenDesign\ValueObject\ValueObject;
 use SoureCode\PhpObjectModel\Model\ArgumentModel;
 use SoureCode\PhpObjectModel\Type\AbstractType;
 use SoureCode\PhpObjectModel\Type\ClassType;
@@ -31,7 +30,7 @@ class DoctrineValueObject extends ValueObject
             return $value->getValue();
         }
 
-        throw new LogicException('Value is not a string.');
+        throw new \LogicException('Value is not a string.');
     }
 
     public function setColumnName(string $columnName): DoctrineValueObject
@@ -46,21 +45,29 @@ class DoctrineValueObject extends ValueObject
         return $this;
     }
 
-    public function setDoctrineHelper(DoctrineHelper $doctrineHelper)
+    public function setDoctrineHelper(DoctrineHelper $doctrineHelper): void
     {
         $this->doctrineHelper = $doctrineHelper;
     }
 
-    public function setType(AbstractType $type): ValueObject
+    public function setType(AbstractType $type): self
     {
         parent::setType($type);
 
-        if ($this->doctrineHelper && !$this->doctrineHelper->canColumnTypeBeInferredByPropertyType($type)) {
-            $constName = $this->doctrineHelper->getTypeConstant($type);
-
+        if ($this->doctrineHelper) {
             $class = $this->getClass();
             $property = $class->getProperty('value');
             $attribute = $property->getAttribute(Column::class);
+
+            if ($this->doctrineHelper->canColumnTypeBeInferredByPropertyType($type)) {
+                if ($attribute->hasArgument('type')) {
+                    $attribute->removeArgument('type');
+                }
+
+                return $this;
+            }
+
+            $constName = $this->doctrineHelper->getTypeConstant($type);
 
             if (null === $constName) {
                 // just set the type itself
@@ -75,7 +82,7 @@ class DoctrineValueObject extends ValueObject
                     return $this;
                 }
 
-                throw new LogicException('Type is not supported.');
+                throw new \LogicException('Type is not supported.');
             }
 
             $value = new ClassConstValue(Types::class, $constName);
