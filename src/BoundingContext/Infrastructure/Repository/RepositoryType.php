@@ -8,5 +8,4 @@ enum RepositoryType: string
 {
     case IN_MEMORY = 'in_memory';
     case DOCTRINE = 'doctrine';
-    case UPSTREAM = 'upstream';
 }

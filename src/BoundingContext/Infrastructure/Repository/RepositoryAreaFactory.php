@@ -17,8 +17,6 @@ class RepositoryAreaFactory
 
     private RepositoryFactoryInterface $doctrineRepositoryFactory;
 
-    private RepositoryFactoryInterface $upstreamRepositoryFactory;
-
     /**
      * @param class-string<RepositoryAreaInterface> $repositoryAreaClass
      */
@@ -26,12 +24,10 @@ class RepositoryAreaFactory
         string $repositoryAreaClass,
         RepositoryFactoryInterface $inMemoryRepositoryFactory,
         RepositoryFactoryInterface $doctrineRepositoryFactory,
-        RepositoryFactoryInterface $upstreamRepositoryFactory,
     ) {
         $this->repositoryAreaClass = $repositoryAreaClass;
         $this->inMemoryRepositoryFactory = $inMemoryRepositoryFactory;
         $this->doctrineRepositoryFactory = $doctrineRepositoryFactory;
-        $this->upstreamRepositoryFactory = $upstreamRepositoryFactory;
     }
 
     public function create(AreaInterface $area, string $name): RepositoryAreaInterface
@@ -39,7 +35,6 @@ class RepositoryAreaFactory
         return new ($this->repositoryAreaClass)(
             $this->inMemoryRepositoryFactory,
             $this->doctrineRepositoryFactory,
-            $this->upstreamRepositoryFactory,
             $area,
             $name
         );

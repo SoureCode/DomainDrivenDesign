@@ -29,7 +29,6 @@ use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\InfrastructureAr
 use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\InfrastructureAreaFactory;
 use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository\DoctrineRepository;
 use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository\InMemoryRepository;
-use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository\UpstreamRepository;
 use SoureCode\DomainDrivenDesign\DomainDrivenDesign;
 use SoureCode\DomainDrivenDesign\DomainDrivenDesignInterface;
 
@@ -75,12 +74,10 @@ abstract class AbstractTestCase extends TestCase
 
         $this->inMemoryRepositoryFactory = new Infrastructure\Repository\RepositoryFactory(InMemoryRepository::class);
         $this->doctrineRepositoryFactory = new Infrastructure\Repository\RepositoryFactory(DoctrineRepository::class);
-        $this->upstreamRepositoryFactory = new Infrastructure\Repository\RepositoryFactory(UpstreamRepository::class);
         $this->infrastructureRepositoryAreaFactory = new Infrastructure\Repository\RepositoryAreaFactory(
             Infrastructure\Repository\RepositoryArea::class,
             $this->inMemoryRepositoryFactory,
             $this->doctrineRepositoryFactory,
-            $this->upstreamRepositoryFactory,
         );
 
         $this->infrastructureAreaFactory = new InfrastructureAreaFactory(InfrastructureArea::class, $this->infrastructureRepositoryAreaFactory);
@@ -108,6 +105,5 @@ abstract class AbstractTestCase extends TestCase
         $this->inMemoryRepositoryFactory = null;
         $this->infrastructureAreaFactory = null;
         $this->infrastructureRepositoryAreaFactory = null;
-        $this->upstreamRepositoryFactory = null;
     }
 }

@@ -13,12 +13,9 @@ class RepositoryArea extends AbstractSubAreaFiles implements RepositoryAreaInter
 
     private RepositoryFactoryInterface $doctrineRepositoryFactory;
 
-    private RepositoryFactoryInterface $upstreamRepositoryFactory;
-
     public function __construct(
         RepositoryFactoryInterface $inMemoryRepositoryFactory,
         RepositoryFactoryInterface $doctrineRepositoryFactory,
-        RepositoryFactoryInterface $upstreamRepositoryFactory,
         AreaInterface $parent,
         string $name
     ) {
@@ -26,7 +23,6 @@ class RepositoryArea extends AbstractSubAreaFiles implements RepositoryAreaInter
 
         $this->inMemoryRepositoryFactory = $inMemoryRepositoryFactory;
         $this->doctrineRepositoryFactory = $doctrineRepositoryFactory;
-        $this->upstreamRepositoryFactory = $upstreamRepositoryFactory;
     }
 
     /**
@@ -38,7 +34,6 @@ class RepositoryArea extends AbstractSubAreaFiles implements RepositoryAreaInter
             return array_merge(
                 $this->getRepositories(RepositoryType::IN_MEMORY),
                 $this->getRepositories(RepositoryType::DOCTRINE),
-                $this->getRepositories(RepositoryType::UPSTREAM)
             );
         }
 
@@ -71,7 +66,6 @@ class RepositoryArea extends AbstractSubAreaFiles implements RepositoryAreaInter
         return match ($type) {
             RepositoryType::IN_MEMORY => $this->inMemoryRepositoryFactory,
             RepositoryType::DOCTRINE => $this->doctrineRepositoryFactory,
-            RepositoryType::UPSTREAM => $this->upstreamRepositoryFactory,
         };
     }
 
@@ -80,7 +74,6 @@ class RepositoryArea extends AbstractSubAreaFiles implements RepositoryAreaInter
         return match ($type) {
             RepositoryType::IN_MEMORY => '*InMemoryRepository.php',
             RepositoryType::DOCTRINE => '*DoctrineRepository.php',
-            RepositoryType::UPSTREAM => '*UpstreamRepository.php',
         };
     }
 
@@ -89,7 +82,6 @@ class RepositoryArea extends AbstractSubAreaFiles implements RepositoryAreaInter
         return match ($type) {
             RepositoryType::IN_MEMORY => $name . 'InMemoryRepository',
             RepositoryType::DOCTRINE => $name . 'DoctrineRepository',
-            RepositoryType::UPSTREAM => $name . 'UpstreamRepository',
         };
     }
 }

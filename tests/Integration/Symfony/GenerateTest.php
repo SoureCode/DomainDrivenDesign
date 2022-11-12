@@ -70,10 +70,6 @@ class GenerateTest extends AbstractTestCase
             ->getClass()
             ->implement($repositoryInterface);
 
-        $infrastructure->createRepository('User', RepositoryType::UPSTREAM)
-            ->getClass()
-            ->implement($repositoryInterface);
-
         $ddd->write($this->writer);
 
         $files = $this->writer->getFiles();
@@ -84,6 +80,5 @@ class GenerateTest extends AbstractTestCase
         self::assertArrayHasKey('src/User/Domain/Repository/UserRepositoryInterface.php', $files);
         self::assertArrayHasKey('src/User/Infrastructure/Repository/UserInMemoryRepository.php', $files);
         self::assertArrayHasKey('src/User/Infrastructure/Repository/UserDoctrineRepository.php', $files);
-        self::assertArrayHasKey('src/User/Infrastructure/Repository/UserUpstreamRepository.php', $files);
     }
 }
