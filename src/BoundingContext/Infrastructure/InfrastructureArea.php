@@ -11,6 +11,9 @@ use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository\Repos
 use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository\RepositoryInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository\RepositoryType;
 
+/**
+ * @extends AbstractSubArea<RepositoryAreaInterface>
+ */
 class InfrastructureArea extends AbstractSubArea implements InfrastructureAreaInterface
 {
     private RepositoryAreaFactory $repositoryAreaFactory;

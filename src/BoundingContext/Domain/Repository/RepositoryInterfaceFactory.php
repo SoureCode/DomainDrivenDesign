@@ -8,22 +8,22 @@ use SoureCode\DomainDrivenDesign\Area\AreaInterface;
 use SoureCode\PhpObjectModel\Model\DeclareModel;
 use SoureCode\PhpObjectModel\Model\InterfaceModel;
 
-class RepositoryFactory implements RepositoryFactoryInterface
+class RepositoryInterfaceFactory implements RepositoryInterfaceFactoryInterface
 {
     /**
-     * @var class-string<RepositoryInterface>
+     * @var class-string<RepositoryInterfaceInterface>
      */
     private string $className;
 
     /**
-     * @param class-string<RepositoryInterface> $className
+     * @param class-string<RepositoryInterfaceInterface> $className
      */
     public function __construct(string $className)
     {
         $this->className = $className;
     }
 
-    public function create(AreaInterface $area, string $name): RepositoryInterface
+    public function create(AreaInterface $area, string $name): RepositoryInterfaceInterface
     {
         $repository = new ($this->className)($area, $name);
 

@@ -15,9 +15,9 @@ use SoureCode\PhpObjectModel\Model\AttributeModel;
 use SoureCode\PhpObjectModel\Model\UseModel;
 use SoureCode\PhpObjectModel\Value\StringValue;
 
-class DoctrineModelFactory implements \SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelFactoryInterface
+class DoctrineModelFactory implements ModelFactoryInterface
 {
-    protected \SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelFactoryInterface $modelFactory;
+    protected ModelFactoryInterface $modelFactory;
 
     protected DoctrineHelper $doctrineHelper;
 
@@ -49,7 +49,7 @@ class DoctrineModelFactory implements \SoureCode\DomainDrivenDesign\BoundingCont
             if ($this->doctrineHelper->isKeyword($name)) {
                 $tableAttribute = new AttributeModel(Table::class);
 
-                $tableName = $this->doctrineHelper->getPotentialTableName($name);
+                $tableName = $this->doctrineHelper->getPotentialTableName($class->getName()->getName());
                 $escapedTableName = $this->doctrineHelper->escapeName($tableName);
 
                 $tableAttribute->setArgument(

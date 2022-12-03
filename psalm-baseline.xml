@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
   <file src="src/BoundingContext/BoundingContextArea.php">
-    <InvalidReturnStatement occurrences="1">
-      <code>$this-&gt;createSubArea('Infrastructure', $this-&gt;infrastructureAreaFactory-&gt;create(...))</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>InfrastructureAreaInterface</code>
-    </InvalidReturnType>
-    <LessSpecificReturnStatement occurrences="1">
+    <LessSpecificReturnStatement occurrences="2">
       <code>$this-&gt;createSubArea('Domain', $this-&gt;domainAreaFactory-&gt;create(...))</code>
+      <code>$this-&gt;createSubArea('Infrastructure', $this-&gt;infrastructureAreaFactory-&gt;create(...))</code>
     </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="1">
+    <MoreSpecificReturnType occurrences="2">
       <code>DomainAreaInterface</code>
+      <code>InfrastructureAreaInterface</code>
     </MoreSpecificReturnType>
   </file>
   <file src="src/BoundingContext/Domain/DomainArea.php">
@@ -21,84 +17,9 @@
       <code>$this-&gt;createSubArea('ValueObject', $this-&gt;valueObjectAreaFactory-&gt;create(...))</code>
     </LessSpecificReturnStatement>
     <MoreSpecificReturnType occurrences="3">
-      <code>ModelArea</code>
-      <code>RepositoryArea</code>
+      <code>ModelAreaInterface</code>
+      <code>RepositoryInterfaceAreaInterface</code>
       <code>ValueObjectAreaInterface</code>
-    </MoreSpecificReturnType>
-  </file>
-  <file src="src/BoundingContext/Domain/Model/ModelArea.php">
-    <LessSpecificReturnStatement occurrences="3">
-      <code>$this-&gt;createFile($name, $this-&gt;modelFactory-&gt;create(...))</code>
-      <code>$this-&gt;getFile($name, $this-&gt;modelFactory-&gt;create(...))</code>
-      <code>$this-&gt;getFiles($this-&gt;modelFactory-&gt;create(...))</code>
-    </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="3">
-      <code>ModelInterface</code>
-      <code>ModelInterface</code>
-      <code>ModelInterface[]</code>
-    </MoreSpecificReturnType>
-  </file>
-  <file src="src/BoundingContext/Domain/Repository/RepositoryArea.php">
-    <LessSpecificReturnStatement occurrences="3">
-      <code>$this-&gt;createFile($name, $this-&gt;repositoryFactory-&gt;create(...))</code>
-      <code>$this-&gt;getFile($name, $this-&gt;repositoryFactory-&gt;create(...))</code>
-      <code>$this-&gt;getFiles($this-&gt;repositoryFactory-&gt;create(...))</code>
-    </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="3">
-      <code>RepositoryInterface</code>
-      <code>RepositoryInterface</code>
-      <code>RepositoryInterface[]</code>
-    </MoreSpecificReturnType>
-  </file>
-  <file src="src/BoundingContext/Domain/Repository/RepositoryAreaFactory.php">
-    <LessSpecificReturnStatement occurrences="1">
-      <code>new ($this-&gt;repositoryAreaClass)($this-&gt;repositoryFactory, $area, $name)</code>
-    </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="1">
-      <code>RepositoryArea</code>
-    </MoreSpecificReturnType>
-  </file>
-  <file src="src/BoundingContext/Domain/ValueObject/ValueObjectArea.php">
-    <LessSpecificReturnStatement occurrences="3">
-      <code>$this-&gt;createFile($name, $this-&gt;valueObjectFactory-&gt;create(...))</code>
-      <code>$this-&gt;getFile($name, $this-&gt;valueObjectFactory-&gt;create(...))</code>
-      <code>$this-&gt;getFiles($this-&gt;valueObjectFactory-&gt;create(...))</code>
-    </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="3">
-      <code>ValueObjectInterface</code>
-      <code>ValueObjectInterface</code>
-      <code>ValueObjectInterface[]</code>
-    </MoreSpecificReturnType>
-  </file>
-  <file src="src/BoundingContext/Infrastructure/InfrastructureArea.php">
-    <InvalidArgument occurrences="1">
-      <code>$this-&gt;repositoryAreaFactory-&gt;create(...)</code>
-    </InvalidArgument>
-    <InvalidReturnStatement occurrences="1">
-      <code>$this-&gt;createSubArea('Repository', $this-&gt;repositoryAreaFactory-&gt;create(...))</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>RepositoryAreaInterface</code>
-    </InvalidReturnType>
-  </file>
-  <file src="src/BoundingContext/Infrastructure/InfrastructureAreaFactory.php">
-    <LessSpecificReturnStatement occurrences="1">
-      <code>new ($this-&gt;className)($this-&gt;repositoryAreaFactory, $area, $name)</code>
-    </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="1">
-      <code>InfrastructureArea</code>
-    </MoreSpecificReturnType>
-  </file>
-  <file src="src/BoundingContext/Infrastructure/Repository/RepositoryArea.php">
-    <LessSpecificReturnStatement occurrences="3">
-      <code>$this-&gt;createFile($this-&gt;getKey($name, $type), $factory-&gt;create(...))</code>
-      <code>$this-&gt;getFile($this-&gt;getKey($name, $type), $factory-&gt;create(...))</code>
-      <code>$this-&gt;getFiles($factory-&gt;create(...), $this-&gt;getPattern($type))</code>
-    </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="3">
-      <code>RepositoryInterface</code>
-      <code>RepositoryInterface</code>
-      <code>RepositoryInterface[]</code>
     </MoreSpecificReturnType>
   </file>
   <file src="src/DomainDrivenDesign.php">
@@ -112,10 +33,5 @@
       <code>BoundingContextAreaInterface</code>
       <code>BoundingContextAreaInterface[]</code>
     </MoreSpecificReturnType>
-  </file>
-  <file src="src/Integration/Doctrine/DoctrineHelper.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>$className</code>
-    </ArgumentTypeCoercion>
   </file>
 </files>

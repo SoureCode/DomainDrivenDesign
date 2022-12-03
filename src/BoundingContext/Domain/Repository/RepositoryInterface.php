@@ -4,12 +4,21 @@ declare(strict_types=1);
 
 namespace SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository;
 
-use SoureCode\DomainDrivenDesign\Area\AreaFileInterface;
+use SoureCode\DomainDrivenDesign\Area\AbstractAreaFile;
 use SoureCode\PhpObjectModel\File\InterfaceFile;
 
 /**
- * @extends AreaFileInterface<InterfaceFile>
+ * @extends AbstractAreaFile<InterfaceFile>
  */
-interface RepositoryInterface extends AreaFileInterface
+class RepositoryInterface extends AbstractAreaFile implements RepositoryInterfaceInterface
 {
+    public function getClassName(): string
+    {
+        return parent::getClassName() . 'RepositoryInterface';
+    }
+
+    public function getFileTypeClassName(): string
+    {
+        return InterfaceFile::class;
+    }
 }

@@ -8,10 +8,10 @@ use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\Model;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelArea;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelAreaFactory;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelFactory;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\Repository;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryArea;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryAreaFactory;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterface;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceArea;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceAreaFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceFactory;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectArea;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectAreaFactory;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectFactory;
@@ -31,8 +31,8 @@ return static function (ContainerConfigurator $container): void {
     $parameters->set(domainName('value_object_area_class'), ValueObjectArea::class);
     $parameters->set(domainName('model_class'), Model::class);
     $parameters->set(domainName('model_area_class'), ModelArea::class);
-    $parameters->set(domainName('repository_area_class'), RepositoryArea::class);
-    $parameters->set(domainName('repository_class'), Repository::class);
+    $parameters->set(domainName('repository_area_class'), RepositoryInterfaceArea::class);
+    $parameters->set(domainName('repository_class'), RepositoryInterface::class);
 
     $services = $container->services();
 
@@ -58,12 +58,12 @@ return static function (ContainerConfigurator $container): void {
             service(domainName('model_factory')),
         ]);
 
-    $services->set(domainName('repository_factory'), RepositoryFactory::class)
+    $services->set(domainName('repository_factory'), RepositoryInterfaceFactory::class)
         ->args([
             param(domainName('repository_class')),
         ]);
 
-    $services->set(domainName('repository_area_factory'), RepositoryAreaFactory::class)
+    $services->set(domainName('repository_area_factory'), RepositoryInterfaceAreaFactory::class)
         ->args([
             param(domainName('repository_area_class')),
             service(domainName('repository_factory')),

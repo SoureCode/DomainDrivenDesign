@@ -7,6 +7,9 @@ namespace SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository
 use SoureCode\DomainDrivenDesign\Area\AbstractSubAreaFiles;
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
 
+/**
+ * @extends AbstractSubAreaFiles<RepositoryInterface>
+ */
 class RepositoryArea extends AbstractSubAreaFiles implements RepositoryAreaInterface
 {
     private RepositoryFactoryInterface $inMemoryRepositoryFactory;

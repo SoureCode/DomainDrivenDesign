@@ -14,11 +14,11 @@ use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelArea;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelAreaFactory;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelFactory;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelFactoryInterface;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\Repository;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryArea;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryAreaFactory;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryFactory;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryFactoryInterface;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterface;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceArea;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceAreaFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceFactoryInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObject;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectArea;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectAreaFactory;
@@ -46,11 +46,11 @@ abstract class AbstractTestCase extends TestCase
 
     protected ?ValueObjectFactoryInterface $valueObjectFactory = null;
 
-    protected ?RepositoryFactoryInterface $domainRepositoryFactory = null;
+    protected ?RepositoryInterfaceFactoryInterface $domainRepositoryFactory = null;
 
     protected ?ModelAreaFactory $modelAreaFactory = null;
 
-    protected ?RepositoryAreaFactory $domainRepositoryAreaFactory = null;
+    protected ?RepositoryInterfaceAreaFactory $domainRepositoryAreaFactory = null;
 
     protected ?Infrastructure\Repository\RepositoryFactory $doctrineRepositoryFactory = null;
 
@@ -67,8 +67,8 @@ abstract class AbstractTestCase extends TestCase
         $this->valueObjectFactory = new ValueObjectFactory(ValueObject::class);
         $this->modelFactory = new ModelFactory(Model::class);
         $this->valueObjectAreaFactory = new ValueObjectAreaFactory(ValueObjectArea::class, $this->valueObjectFactory);
-        $this->domainRepositoryFactory = new RepositoryFactory(Repository::class);
-        $this->domainRepositoryAreaFactory = new RepositoryAreaFactory(RepositoryArea::class, $this->domainRepositoryFactory);
+        $this->domainRepositoryFactory = new RepositoryInterfaceFactory(RepositoryInterface::class);
+        $this->domainRepositoryAreaFactory = new RepositoryInterfaceAreaFactory(RepositoryInterfaceArea::class, $this->domainRepositoryFactory);
         $this->modelAreaFactory = new ModelAreaFactory(ModelArea::class, $this->modelFactory);
         $this->domainAreaFactory = new DomainAreaFactory(DomainArea::class, $this->modelAreaFactory, $this->valueObjectAreaFactory, $this->domainRepositoryAreaFactory);
 

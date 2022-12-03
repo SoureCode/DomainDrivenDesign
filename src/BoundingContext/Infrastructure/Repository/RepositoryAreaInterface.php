@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository;
 
-interface RepositoryAreaInterface
+use SoureCode\DomainDrivenDesign\Area\SubAreaInterface;
+
+interface RepositoryAreaInterface extends SubAreaInterface
 {
     /**
      * @return RepositoryInterface[]

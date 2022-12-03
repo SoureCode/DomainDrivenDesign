@@ -6,25 +6,25 @@ namespace SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository;
 
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
 
-class RepositoryAreaFactory
+class RepositoryInterfaceAreaFactory
 {
     /**
-     * @var class-string<RepositoryAreaInterface>
+     * @var class-string<RepositoryInterfaceAreaInterface>
      */
     private string $repositoryAreaClass;
 
-    private RepositoryFactoryInterface $repositoryFactory;
+    private RepositoryInterfaceFactoryInterface $repositoryFactory;
 
     /**
-     * @param class-string<RepositoryAreaInterface> $repositoryAreaClass
+     * @param class-string<RepositoryInterfaceAreaInterface> $repositoryAreaClass
      */
-    public function __construct(string $repositoryAreaClass, RepositoryFactoryInterface $repositoryFactory)
+    public function __construct(string $repositoryAreaClass, RepositoryInterfaceFactoryInterface $repositoryFactory)
     {
         $this->repositoryAreaClass = $repositoryAreaClass;
         $this->repositoryFactory = $repositoryFactory;
     }
 
-    public function create(AreaInterface $area, string $name): RepositoryArea
+    public function create(AreaInterface $area, string $name): RepositoryInterfaceAreaInterface
     {
         return new ($this->repositoryAreaClass)($this->repositoryFactory, $area, $name);
     }

@@ -25,7 +25,7 @@ class InfrastructureAreaFactory
         $this->repositoryAreaFactory = $repositoryAreaFactory;
     }
 
-    public function create(AreaInterface $area, string $name): InfrastructureArea
+    public function create(AreaInterface $area, string $name): InfrastructureAreaInterface
     {
         return new ($this->className)($this->repositoryAreaFactory, $area, $name);
     }

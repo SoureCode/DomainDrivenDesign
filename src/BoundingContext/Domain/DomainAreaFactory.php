@@ -6,7 +6,7 @@ namespace SoureCode\DomainDrivenDesign\BoundingContext\Domain;
 
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelAreaFactory;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryAreaFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceAreaFactory;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectAreaFactory;
 
 class DomainAreaFactory
@@ -20,7 +20,7 @@ class DomainAreaFactory
 
     private ValueObjectAreaFactory $valueObjectAreaFactory;
 
-    private RepositoryAreaFactory $repositoryAreaFactory;
+    private RepositoryInterfaceAreaFactory $repositoryAreaFactory;
 
     /**
      * @param class-string<DomainAreaInterface> $className
@@ -29,7 +29,7 @@ class DomainAreaFactory
         string $className,
         ModelAreaFactory $modelAreaFactory,
         ValueObjectAreaFactory $valueObjectAreaFactory,
-        RepositoryAreaFactory $repositoryAreaFactory
+        RepositoryInterfaceAreaFactory $repositoryAreaFactory
     ) {
         $this->className = $className;
         $this->modelAreaFactory = $modelAreaFactory;

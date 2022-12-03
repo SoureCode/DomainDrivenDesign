@@ -47,6 +47,9 @@ class DoctrineHelper
         return $name;
     }
 
+    /**
+     * @param class-string|ClassName $className
+     */
     public function getPotentialTableName(ClassName|string $className): string
     {
         $entityManager = $this->registry->getManager();
@@ -55,7 +58,7 @@ class DoctrineHelper
             throw new \RuntimeException('ObjectManager is not an EntityManagerInterface.');
         }
 
-        $className = $className instanceof ClassName ? $className->getShortName() : $className;
+        $className = $className instanceof ClassName ? $className->getName() : $className;
 
         return $entityManager
             ->getConfiguration()

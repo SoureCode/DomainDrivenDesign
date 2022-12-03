@@ -6,7 +6,7 @@ namespace SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository;
 
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
 
-interface RepositoryFactoryInterface
+interface RepositoryInterfaceFactoryInterface
 {
-    public function create(AreaInterface $area, string $name): RepositoryInterface;
+    public function create(AreaInterface $area, string $name): RepositoryInterfaceInterface;
 }

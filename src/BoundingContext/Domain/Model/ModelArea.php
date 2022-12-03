@@ -7,6 +7,9 @@ namespace SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model;
 use SoureCode\DomainDrivenDesign\Area\AbstractSubAreaFiles;
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
 
+/**
+ * @extends AbstractSubAreaFiles<ModelInterface>
+ */
 class ModelArea extends AbstractSubAreaFiles implements ModelAreaInterface
 {
     private ModelFactoryInterface $modelFactory;

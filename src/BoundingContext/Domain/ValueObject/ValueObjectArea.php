@@ -7,6 +7,9 @@ namespace SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject;
 use SoureCode\DomainDrivenDesign\Area\AbstractSubAreaFiles;
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
 
+/**
+ * @extends AbstractSubAreaFiles<ValueObjectInterface>
+ */
 class ValueObjectArea extends AbstractSubAreaFiles implements ValueObjectAreaInterface
 {
     private ValueObjectFactoryInterface $valueObjectFactory;

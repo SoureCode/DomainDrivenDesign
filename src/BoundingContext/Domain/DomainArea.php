@@ -6,28 +6,32 @@ namespace SoureCode\DomainDrivenDesign\BoundingContext\Domain;
 
 use SoureCode\DomainDrivenDesign\Area\AbstractSubArea;
 use SoureCode\DomainDrivenDesign\Area\AreaInterface;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelArea;
+use SoureCode\DomainDrivenDesign\Area\SubAreaInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelAreaFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelAreaInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelInterface;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryArea;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryAreaFactory;
-use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterface;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceAreaFactory;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceAreaInterface;
+use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectAreaFactory;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectAreaInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectInterface;
 
+/**
+ * @extends AbstractSubArea<SubAreaInterface>
+ */
 final class DomainArea extends AbstractSubArea implements DomainAreaInterface
 {
     private ModelAreaFactory $modelAreaFactory;
 
     private ValueObjectAreaFactory $valueObjectAreaFactory;
 
-    private RepositoryAreaFactory $repositoryAreaFactory;
+    private RepositoryInterfaceAreaFactory $repositoryAreaFactory;
 
     public function __construct(
         ModelAreaFactory $modelAreaFactory,
         ValueObjectAreaFactory $valueObjectAreaFactory,
-        RepositoryAreaFactory $repositoryAreaFactory,
+        RepositoryInterfaceAreaFactory $repositoryAreaFactory,
         AreaInterface $parent,
         string $name
     ) {
@@ -38,7 +42,7 @@ final class DomainArea extends AbstractSubArea implements DomainAreaInterface
         $this->repositoryAreaFactory = $repositoryAreaFactory;
     }
 
-    public function model(): ModelArea
+    public function model(): ModelAreaInterface
     {
         return $this->createSubArea('Model', $this->modelAreaFactory->create(...));
     }
@@ -94,20 +98,20 @@ final class DomainArea extends AbstractSubArea implements DomainAreaInterface
         return $this->createSubArea('ValueObject', $this->valueObjectAreaFactory->create(...));
     }
 
-    public function repository(): RepositoryArea
+    public function repository(): RepositoryInterfaceAreaInterface
     {
         return $this->createSubArea('Repository', $this->repositoryAreaFactory->create(...));
     }
 
     /**
-     * @return RepositoryInterface[]
+     * @return RepositoryInterfaceInterface[]
      */
     public function getRepositories(): array
     {
         return $this->repository()->getRepositories();
     }
 
-    public function getRepository(string $name): RepositoryInterface
+    public function getRepository(string $name): RepositoryInterfaceInterface
     {
         return $this->repository()->getRepository($name);
     }
@@ -117,7 +121,7 @@ final class DomainArea extends AbstractSubArea implements DomainAreaInterface
         return $this->repository()->hasRepository($name);
     }
 
-    public function createRepository(string $name): RepositoryInterface
+    public function createRepository(string $name): RepositoryInterfaceInterface
     {
         return $this->repository()->createRepository($name);
     }
