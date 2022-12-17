@@ -10,6 +10,8 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * @template T of AreaFileInterface
+ *
+ * @extends AbstractSubArea<T>
  */
 abstract class AbstractSubAreaFiles extends AbstractSubArea
 {

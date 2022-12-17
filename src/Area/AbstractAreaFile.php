@@ -16,6 +16,8 @@ use Symfony\Component\Filesystem\Path;
 
 /**
  * @template-covariant T of AbstractFile
+ *
+ * @implements AreaFileInterface<T>
  */
 abstract class AbstractAreaFile implements AreaFileInterface
 {

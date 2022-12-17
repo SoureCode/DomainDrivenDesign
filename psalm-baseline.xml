@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+<files psalm-version="5.2.0@fb685a16df3050d4c18d8a4100fe83abe6458cba">
   <file src="src/BoundingContext/BoundingContextArea.php">
     <LessSpecificReturnStatement occurrences="2">
       <code>$this-&gt;createSubArea('Domain', $this-&gt;domainAreaFactory-&gt;create(...))</code>
@@ -20,18 +20,6 @@
       <code>ModelAreaInterface</code>
       <code>RepositoryInterfaceAreaInterface</code>
       <code>ValueObjectAreaInterface</code>
-    </MoreSpecificReturnType>
-  </file>
-  <file src="src/DomainDrivenDesign.php">
-    <LessSpecificReturnStatement occurrences="3">
-      <code>$this-&gt;createSubArea($name, $this-&gt;boundingContextAreaFactory-&gt;create(...))</code>
-      <code>$this-&gt;getSubArea($name, $this-&gt;boundingContextAreaFactory-&gt;create(...))</code>
-      <code>$this-&gt;getSubAreas($this-&gt;boundingContextAreaFactory-&gt;create(...))</code>
-    </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="3">
-      <code>BoundingContextAreaInterface</code>
-      <code>BoundingContextAreaInterface</code>
-      <code>BoundingContextAreaInterface[]</code>
     </MoreSpecificReturnType>
   </file>
 </files>
