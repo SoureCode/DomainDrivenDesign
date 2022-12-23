@@ -42,3 +42,8 @@ function boundingContextName(string $serviceName): string
 {
     return serviceName([...prefixes(), 'bounding_context'], $serviceName);
 }
+
+function integrationName(string $serviceName): string
+{
+    return serviceName([...prefixes(), 'integration'], $serviceName);
+}

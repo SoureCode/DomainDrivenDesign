@@ -18,5 +18,6 @@ class SoureCodeDomainDrivenDesignBundle extends AbstractBundle
         $container->import(__DIR__ . '/config/services.php');
 
         $container->import(__DIR__ . '/config/doctrine.php');
+        $container->import(__DIR__ . '/config/maker.php');
     }
 }
