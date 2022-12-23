@@ -404,7 +404,7 @@ HEREDOC
         $boundingContextName = $boundingContext->getName();
 
         // @todo configurable prefix and directory
-        $doctrineData['doctrine']['orm']['mappings'][$model->getName()] = [
+        $doctrineData['doctrine']['orm']['mappings'][$boundingContextName] = [
             'is_bundle' => false,
             'dir' => '%kernel.project_dir%/src/'.$boundingContextName.'/Domain',
             'prefix' => 'App\\'.$boundingContextName.'\\Domain',
