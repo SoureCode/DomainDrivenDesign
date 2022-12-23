@@ -408,7 +408,7 @@ HEREDOC
             'is_bundle' => false,
             'dir' => '%kernel.project_dir%/src/'.$boundingContextName.'/Domain',
             'prefix' => 'App\\'.$boundingContextName.'\\Domain',
-            'alias' => $boundingContext,
+            'alias' => $boundingContextName,
         ];
 
         $manipulator->setData($doctrineData);
