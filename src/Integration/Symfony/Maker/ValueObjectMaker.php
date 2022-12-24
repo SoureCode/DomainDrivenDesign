@@ -6,6 +6,7 @@ namespace SoureCode\DomainDrivenDesign\Integration\Symfony\Maker;
 
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\ValueObject\ValueObjectInterface;
 use SoureCode\DomainDrivenDesign\Integration\Maker\Writer\MakerBundleWriter;
+use SoureCode\PhpObjectModel\Type\ArrayType;
 use SoureCode\PhpObjectModel\Type\BooleanType;
 use SoureCode\PhpObjectModel\Type\ClassType;
 use SoureCode\PhpObjectModel\Type\FloatType;
@@ -48,11 +49,12 @@ class ValueObjectMaker extends AbstractDomainDrivenDesignMaker
                 'construct',
                 'passOrConstruct',
             ])
-            ->addOption('type', null, InputOption::VALUE_REQUIRED, 'The type of the value object (string/int/float/bool)', null, [
+            ->addOption('type', null, InputOption::VALUE_REQUIRED, 'The type of the value object (string/int/float/bool/array)', null, [
                 'string',
                 'int',
                 'float',
                 'bool',
+                'array',
             ])
             ->addOption('class', null, InputOption::VALUE_REQUIRED, 'The class type of the value object (e.g. <fg=yellow>DateTime</>)');
 
@@ -68,6 +70,7 @@ class ValueObjectMaker extends AbstractDomainDrivenDesignMaker
                 'int',
                 'float',
                 'bool',
+                'array',
             ];
         });
     }
@@ -142,6 +145,8 @@ class ValueObjectMaker extends AbstractDomainDrivenDesignMaker
                 $valueObject->setType(new FloatType());
             } elseif ('bool' === $typeOption) {
                 $valueObject->setType(new BooleanType());
+            } elseif ('array' === $typeOption) {
+                $valueObject->setType(new ArrayType());
             } else {
                 throw new \InvalidArgumentException(sprintf('The type "%s" is not supported.', $typeOption));
             }
