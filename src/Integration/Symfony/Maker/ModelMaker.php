@@ -68,7 +68,7 @@ class ModelMaker extends AbstractDomainDrivenDesignMaker
 
         $domain = $boundingContext->domain();
         $model = $domain->createModel($modelName);
-        $modelId = $domain->createValueObject($modelName.'Id');
+        $modelId = $domain->createValueObject($modelName . 'Id');
         $modelIdClass = $modelId->getFile()->getClass();
 
         if ($modelIdClass->hasMethod('__construct')) {

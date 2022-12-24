@@ -82,7 +82,7 @@ class BoundingContextMaker extends AbstractDomainDrivenDesignMaker
         $generator->dumpFile(
             Path::join(
                 'config/services/',
-                $this->getSlugName($boundingContext->getName()).'.php'
+                $this->getSlugName($boundingContext->getName()) . '.php'
             ),
             $serviceFile->getSourceCode()
         );
@@ -98,7 +98,7 @@ class BoundingContextMaker extends AbstractDomainDrivenDesignMaker
         $generator->dumpFile(
             Path::join(
                 'config/services/test/',
-                $this->getSlugName($boundingContext->getName()).'.php'
+                $this->getSlugName($boundingContext->getName()) . '.php'
             ),
             $serviceFile->getSourceCode()
         );

@@ -74,10 +74,10 @@ class ServiceFileFactory
                     new Node\Expr\Variable('services'),
                     'load',
                     [
-                        new Node\Scalar\String_($namespace->getName().'\\'),
+                        new Node\Scalar\String_($namespace->getName() . '\\'),
                         new Node\Expr\BinaryOp\Concat(
                             new Node\Scalar\MagicConst\Dir(),
-                            new Node\Scalar\String_('/'.$directory),
+                            new Node\Scalar\String_('/' . $directory),
                         ),
                     ]
                 )

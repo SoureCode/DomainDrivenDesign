@@ -153,6 +153,7 @@ class ValueObject extends AbstractAreaFile implements ValueObjectInterface
     private function createConstructConstructorMethod(ClassModel $class): ClassMethodModel
     {
         $constructor = new ClassMethodModel('__construct');
+        $constructor->setPublic();
 
         $type = $this->getType();
 

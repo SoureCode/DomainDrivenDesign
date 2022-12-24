@@ -11,10 +11,10 @@ use SoureCode\DomainDrivenDesign\BoundingContext\BoundingContextAreaInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\DomainAreaInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Model\ModelInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Domain\Repository\RepositoryInterfaceInterface;
-use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\InfrastructureAreaInterface;
-use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository\RepositoryType;
 use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure;
+use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\InfrastructureAreaInterface;
 use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository\RepositoryInterface;
+use SoureCode\DomainDrivenDesign\BoundingContext\Infrastructure\Repository\RepositoryType;
 use SoureCode\DomainDrivenDesign\DomainDrivenDesign;
 use SoureCode\DomainDrivenDesign\Integration\Maker\Writer\MakerBundleWriter;
 use SoureCode\DomainDrivenDesign\Integration\Symfony\File\ServicesClosureFile;
@@ -56,8 +56,7 @@ class RepositoryMaker extends AbstractDomainDrivenDesignMaker
         string $repositoryInterfaceClass,
         string $doctrineRepositoryClass,
         string $inMemoryRepositoryClass,
-    )
-    {
+    ) {
         parent::__construct($domainDrivenDesign);
 
         $this->repositoryInterfaceClass = ClassName::fromString($repositoryInterfaceClass);
@@ -206,14 +205,14 @@ class RepositoryMaker extends AbstractDomainDrivenDesignMaker
     {
         $slugName = $this->getSlugName($boundingContext->getName());
 
-        return 'config/services/test/'.$slugName.'.php';
+        return 'config/services/test/' . $slugName . '.php';
     }
 
     protected function getServiceConfigFilePath(BoundingContextAreaInterface $boundingContext): string
     {
         $slugName = $this->getSlugName($boundingContext->getName());
 
-        return 'config/services/'.$slugName.'.php';
+        return 'config/services/' . $slugName . '.php';
     }
 
     private function ensurePublicInTestService(Generator $generator, BoundingContextAreaInterface $boundingContext, RepositoryInterface $repositoryImplementation): void
@@ -406,8 +405,8 @@ HEREDOC
         // @todo configurable prefix and directory
         $doctrineData['doctrine']['orm']['mappings'][$boundingContextName] = [
             'is_bundle' => false,
-            'dir' => '%kernel.project_dir%/src/'.$boundingContextName.'/Domain',
-            'prefix' => 'App\\'.$boundingContextName.'\\Domain',
+            'dir' => '%kernel.project_dir%/src/' . $boundingContextName . '/Domain',
+            'prefix' => 'App\\' . $boundingContextName . '\\Domain',
             'alias' => $boundingContextName,
         ];
 
