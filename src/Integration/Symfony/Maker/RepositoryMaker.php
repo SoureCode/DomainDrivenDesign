@@ -363,8 +363,13 @@ HEREDOC
             $entityClassConst = new ClassConstModel('ENTITY_CLASS', new ClassConstValue($modelClassName, 'class'));
             $entityClassConst->setPrivate();
 
-            $class->addConstant($aliasClassConst);
-            $class->addConstant($entityClassConst);
+            if (!$class->hasConstant($aliasClassConst)) {
+                $class->addConstant($aliasClassConst);
+            }
+
+            if (!$class->hasConstant($entityClassConst)) {
+                $class->addConstant($entityClassConst);
+            }
 
             if (!$class->hasMethod('__construct')) {
                 /**
