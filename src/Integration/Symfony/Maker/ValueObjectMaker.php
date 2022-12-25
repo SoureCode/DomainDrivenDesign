@@ -64,15 +64,18 @@ class ValueObjectMaker extends AbstractDomainDrivenDesignMaker
     public function interact(InputInterface $input, ConsoleStyle $io, Command $command): void
     {
         $this->askArgumentChoice($input, $io, $command, 'bounding-context', $this->getBoundingContextChoices(...));
-        $this->askOptionChoice($input, $io, $command, 'type', function () {
-            return [
-                'string',
-                'int',
-                'float',
-                'bool',
-                'array',
-            ];
-        });
+
+        if (!$input->hasOption('class')) {
+            $this->askOptionChoice($input, $io, $command, 'type', function () {
+                return [
+                    'string',
+                    'int',
+                    'float',
+                    'bool',
+                    'array',
+                ];
+            });
+        }
     }
 
     public function configureDependencies(DependencyBuilder $dependencies): void
